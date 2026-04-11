@@ -20,67 +20,12 @@ Before running any commands, have these three things ready:
 
 ## Mac
 
-On Mac, Claude Desktop is a GUI app — it does not read environment variables from your
-terminal profile (`.zshrc`). You must use `launchctl` to set variables at the system level
-so that all apps including Claude Desktop can read them.
-
-### Set the variables (run once in Terminal)
-
-Replace the example values with your own:
+Open Terminal and run these three commands, replacing the example values with your own:
 
 ```bash
 launchctl setenv JIRA_URL "https://yourname-testing.atlassian.net"
 launchctl setenv JIRA_USERNAME "your@email.com"
 launchctl setenv JIRA_API_TOKEN "your-api-token-here"
-```
-
-> **Note:** `launchctl setenv` takes effect immediately for newly launched apps, but does
-> not survive a reboot. To make them permanent across reboots, also add them to your
-> `~/.zshrc` (for terminal use) AND re-run the `launchctl` commands after each reboot,
-> or follow the LaunchAgent approach below.
-
-### Make permanent across reboots (recommended)
-
-Add to `~/.zshrc` for terminal sessions:
-
-```bash
-echo 'export JIRA_URL="https://yourname-testing.atlassian.net"' >> ~/.zshrc
-echo 'export JIRA_USERNAME="your@email.com"' >> ~/.zshrc
-echo 'export JIRA_API_TOKEN="your-api-token-here"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-And create a LaunchAgent so Claude Desktop picks them up after reboot:
-
-```bash
-cat > ~/Library/LaunchAgents/com.vibetesting.jira-env.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-  <string>com.vibetesting.jira-env</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/sh</string>
-    <string>-c</string>
-    <string>
-      launchctl setenv JIRA_URL "YOUR_JIRA_URL" &amp;&amp;
-      launchctl setenv JIRA_USERNAME "YOUR_EMAIL" &amp;&amp;
-      launchctl setenv JIRA_API_TOKEN "YOUR_API_TOKEN"
-    </string>
-  </array>
-  <key>RunAtLoad</key>
-  <true/>
-</dict>
-</plist>
-EOF
-```
-
-Replace `YOUR_JIRA_URL`, `YOUR_EMAIL`, and `YOUR_API_TOKEN` with your real values, then load it:
-
-```bash
-launchctl load ~/Library/LaunchAgents/com.vibetesting.jira-env.plist
 ```
 
 ### Verify the variables are set
@@ -91,7 +36,10 @@ launchctl getenv JIRA_USERNAME
 launchctl getenv JIRA_API_TOKEN
 ```
 
-Each command should print your value. If you see a blank line, re-run the `launchctl setenv` commands.
+Each command should print your value.
+
+> **Note:** These variables reset after a reboot. If you restart your Mac, re-run the three
+> `launchctl setenv` commands above before using Claude Desktop with Jira.
 
 ### After setting — restart Claude Desktop
 
@@ -101,11 +49,6 @@ Fully quit Claude Desktop (right-click menu bar icon → Quit), then reopen it.
 
 ## Windows
 
-The Windows installer sets variables at the user account level — all apps including GUI
-apps can read them automatically.
-
-### Set the variables (run once)
-
 Open **PowerShell** and run these three commands, replacing the example values with your own:
 
 ```powershell
@@ -113,8 +56,6 @@ Open **PowerShell** and run these three commands, replacing the example values w
 [System.Environment]::SetEnvironmentVariable("JIRA_USERNAME", "your@email.com", "User")
 [System.Environment]::SetEnvironmentVariable("JIRA_API_TOKEN", "your-api-token-here", "User")
 ```
-
-The `"User"` scope saves them permanently for your account — run this once.
 
 ### Verify the variables are set
 
@@ -124,9 +65,11 @@ The `"User"` scope saves them permanently for your account — run this once.
 [System.Environment]::GetEnvironmentVariable("JIRA_API_TOKEN", "User")
 ```
 
+The `"User"` scope saves them permanently — no need to repeat after reboot.
+
 ### After setting — restart Claude Desktop
 
-Fully quit and reopen Claude Desktop. The variables are read at launch.
+Fully quit and reopen Claude Desktop.
 
 ---
 
