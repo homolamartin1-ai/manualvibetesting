@@ -1,84 +1,73 @@
-# MCP Environment Variables Setup
+# MCP Credentials Setup
 ## Vibetesting in 2026 — Course Resources
 
-Set these three environment variables once. The MCP config file reads them automatically —
-your Jira credentials never appear in any file you might accidentally share or commit.
+This guide shows how to add your Jira credentials to the Claude Desktop config file so
+MCP can connect to your Jira account.
 
 ---
 
-## Your values
+## Step 1 — Generate your Jira API Token
 
-Before running any commands, have these three things ready:
-
-| Variable | Value |
-|---|---|
-| `JIRA_URL` | Your Jira site URL, e.g. `https://yourname-testing.atlassian.net` |
-| `JIRA_USERNAME` | The email you use to log into Jira |
-| `JIRA_API_TOKEN` | The API token from id.atlassian.com/manage-profile/security/api-tokens |
+1. Go to **id.atlassian.com/manage-profile/security/api-tokens**
+2. Click **Create API token**
+3. Name it: `MCP Course`
+4. Click **Create**
+5. **Copy the token immediately** — you cannot view it again after closing this dialog
 
 ---
 
-## Mac
+## Step 2 — Edit the config file
 
-Open Terminal and run these three commands, replacing the example values with your own:
+Open this file in any text editor (VS Code, Notepad, TextEdit):
 
-```bash
-launchctl setenv JIRA_URL "https://yourname-testing.atlassian.net"
-launchctl setenv JIRA_USERNAME "your@email.com"
-launchctl setenv JIRA_API_TOKEN "your-api-token-here"
+**Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+Find the `env` block and replace the three placeholder values with your own:
+
+```json
+"env": {
+  "JIRA_URL": "https://YOUR-SITE.atlassian.net",
+  "JIRA_USERNAME": "your@email.com",
+  "JIRA_API_TOKEN": "your-api-token-here"
+}
 ```
 
-### Verify the variables are set
+Save the file.
 
-```bash
-launchctl getenv JIRA_URL
-launchctl getenv JIRA_USERNAME
-launchctl getenv JIRA_API_TOKEN
-```
-
-Each command should print your value.
-
-> **Note:** These variables reset after a reboot. If you restart your Mac, re-run the three
-> `launchctl setenv` commands above before using Claude Desktop with Jira.
-
-### After setting — restart Claude Desktop
-
-Fully quit Claude Desktop (right-click menu bar icon → Quit), then reopen it.
+> **Keep this file private.** Do not commit it to GitHub or share it — it contains your API token.
 
 ---
 
-## Windows
+## Step 3 — Restart Claude Desktop
 
-Open **PowerShell** and run these three commands, replacing the example values with your own:
-
-```powershell
-[System.Environment]::SetEnvironmentVariable("JIRA_URL", "https://yourname-testing.atlassian.net", "User")
-[System.Environment]::SetEnvironmentVariable("JIRA_USERNAME", "your@email.com", "User")
-[System.Environment]::SetEnvironmentVariable("JIRA_API_TOKEN", "your-api-token-here", "User")
-```
-
-### Verify the variables are set
-
-```powershell
-[System.Environment]::GetEnvironmentVariable("JIRA_URL", "User")
-[System.Environment]::GetEnvironmentVariable("JIRA_USERNAME", "User")
-[System.Environment]::GetEnvironmentVariable("JIRA_API_TOKEN", "User")
-```
-
-The `"User"` scope saves them permanently — no need to repeat after reboot.
-
-### After setting — restart Claude Desktop
-
-Fully quit and reopen Claude Desktop.
+Fully quit Claude Desktop (right-click menu bar icon → Quit on Mac, taskbar on Windows).
+Reopen it.
 
 ---
 
-## Test the connection
+## Step 4 — Test the connection
 
-Send this message in a new Claude Desktop conversation:
+Open a new conversation and send:
 
 ```
 List all projects in my Jira account.
 ```
 
-Claude should respond with your project list. The hammer icon (🔨) near the message input confirms MCP is active.
+Claude should respond with your project list. The hammer icon (🔨) near the message input
+confirms MCP tools are active.
+
+---
+
+## Troubleshooting
+
+**Claude says 0 projects or no tools available:**
+- Make sure you fully quit and restarted Claude Desktop after saving the config
+- Double-check the JIRA_URL includes `https://` and ends with `.atlassian.net`
+- Confirm the API token is complete — they are long strings, easy to cut off
+- Check the email matches exactly what you log into Jira with
+- Validate the JSON is valid at jsonlint.com (a missing comma breaks the whole file)
+
+**Hammer icon not visible:**
+- Open a brand new conversation (Cmd+N on Mac) — the icon only appears in new chats
+- The connection may still work even without the icon — just try sending the test message

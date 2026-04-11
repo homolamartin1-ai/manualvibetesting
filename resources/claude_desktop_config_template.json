@@ -3,7 +3,11 @@
     "atlassian": {
       "command": "uvx",
       "args": ["mcp-atlassian"],
-      "env": {}
+      "env": {
+        "JIRA_URL": "https://YOUR-SITE.atlassian.net",
+        "JIRA_USERNAME": "your@email.com",
+        "JIRA_API_TOKEN": "your-api-token-here"
+      }
     }
   }
 }
