@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Untitled</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand" onclick="showPage('products')">Tech<span>Shop</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('products')">Products</a>
+    <div class="cart-icon" onclick="showPage('cart')">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Cart
+      <span class="cart-badge" id="cart-count">0</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE: LOGIN ══ -->
+<section id="page-login" class="page">
+  <div class="login-card">
+    <h2>Welcome back</h2>
+    <p class="subtitle">Sign in to your TechShop account</p>
+    <div class="form-group">
+      <label for="login-user">Username</label>
+      <input type="text" id="login-user" placeholder="Enter username" />
+    </div>
+    <div class="form-group">
+      <label for="login-pass">Password</label>
+      <input type="text" id="login-pass" placeholder="Enter password" />
+    </div>
+    <button class="btn btn-primary" onclick="buggyLogin()">Sign In</button>
+    <button class="btn btn-secondary" style="width:100%;margin-top:10px;" onclick="showPage('products')">
+      Browse as Guest
+    </button>
+    <p class="login-hint">Demo credentials: admin / password123</p>
+  </div>
+</section>
+
+<!-- ══ PAGE: PRODUCTS ══ -->
+<section id="page-products" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h2>Our Products</h2>
+        <p>Discover the latest tech gadgets at great prices</p>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CART ══ -->
+<section id="page-cart" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div><h2>Shopping Cart</h2></div>
+    </div>
+    <div id="cart-content"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CHECKOUT ══ -->
+<section id="page-checkout" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div><h2>Checkout</h2></div>
+    </div>
+    <div class="checkout-layout">
+      <div class="checkout-form-panel">
+        <h3>Shipping Information</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="co-firstname" placeholder="John" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="co-lastname" placeholder="Doe" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" id="co-address" placeholder="123 Main Street" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" id="co-city" placeholder="New York" />
+          </div>
+          <div class="form-group">
+            <label>ZIP Code</label>
+            <input type="text" id="co-zip" placeholder="10001" />
+          </div>
+        </div>
+        <hr class="section-divider" />
+        <h3>Contact Details</h3>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" id="co-email" placeholder="john@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="co-phone" placeholder="555-0100" />
+        </div>
+        <hr class="section-divider" />
+        <h3>Payment</h3>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" id="co-card" placeholder="1234 5678 9012 3456" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry</label>
+            <input type="text" id="co-expiry" placeholder="MM/YY" />
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" id="co-cvv" placeholder="123" />
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:8px;" onclick="buggyPlaceOrder()">Place Order</button>
+      </div>
+      <div class="checkout-order-panel">
+        <h3>Order Summary</h3>
+        <p style="color:#94a3b8;font-size:0.88rem;">Nothing to show here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CONFIRMATION ══ -->
+<section id="page-confirm" class="hidden">
+  <div class="confirm-card">
+    <div class="confirm-icon">✓</div>
+    <h2>Order Placed!</h2>
+    <p>Your order has been placed successfully.</p>
+    <button class="btn btn-primary" onclick="showPage('products')">Continue Shopping</button>
+  </div>
+</section>
+
+<div class="toast hidden" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

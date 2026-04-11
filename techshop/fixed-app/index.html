@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TechShop — Tech Gadgets Online Store</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar hidden" id="main-navbar">
+  <div class="navbar-brand" onclick="showPage('products')">Tech<span>Shop</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('products')">Products</a>
+    <div class="cart-icon" onclick="showPage('cart')">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      Cart
+      <span class="cart-badge" id="cart-count">0</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE: LOGIN ══ -->
+<section id="page-login" class="page">
+  <div class="login-card">
+    <h2>Welcome back</h2>
+    <p class="subtitle">Sign in to your TechShop account</p>
+
+    <div class="error-msg hidden" id="login-error">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span id="login-error-text">Invalid username or password.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="login-user">Username</label>
+      <input type="text" id="login-user" placeholder="Enter username" autocomplete="username" />
+      <div class="field-error hidden" id="err-login-user">Username is required.</div>
+    </div>
+    <div class="form-group">
+      <label for="login-pass">Password</label>
+      <input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password" />
+      <div class="field-error hidden" id="err-login-pass">Password is required.</div>
+    </div>
+
+    <button class="btn btn-primary" onclick="fixedLogin()">Sign In</button>
+    <p class="login-hint">Demo credentials: admin / password123</p>
+  </div>
+</section>
+
+<!-- ══ PAGE: PRODUCTS ══ -->
+<section id="page-products" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h2>Our Products</h2>
+        <p>Discover the latest tech gadgets at great prices</p>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CART ══ -->
+<section id="page-cart" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div><h2>Shopping Cart</h2></div>
+    </div>
+    <div id="cart-content"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CHECKOUT ══ -->
+<section id="page-checkout" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div><h2>Checkout</h2></div>
+    </div>
+    <div class="checkout-layout">
+      <div class="checkout-form-panel">
+        <h3>Shipping Information</h3>
+        <div id="checkout-error" class="error-msg hidden" style="margin-bottom:20px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="checkout-error-text">Please fix the errors below.</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-firstname" placeholder="John" />
+            <div class="field-error hidden" id="err-firstname">First name is required.</div>
+          </div>
+          <div class="form-group">
+            <label>Last Name <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-lastname" placeholder="Doe" />
+            <div class="field-error hidden" id="err-lastname">Last name is required.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address <span style="color:#ef4444">*</span></label>
+          <input type="text" id="co-address" placeholder="123 Main Street" />
+          <div class="field-error hidden" id="err-address">Address is required.</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-city" placeholder="New York" />
+            <div class="field-error hidden" id="err-city">City is required.</div>
+          </div>
+          <div class="form-group">
+            <label>ZIP Code <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-zip" placeholder="10001" />
+            <div class="field-error hidden" id="err-zip">ZIP code is required.</div>
+          </div>
+        </div>
+        <hr class="section-divider" />
+        <h3>Contact Details</h3>
+        <div class="form-group">
+          <label>Email Address <span style="color:#ef4444">*</span></label>
+          <input type="email" id="co-email" placeholder="john@example.com" />
+          <div class="field-error hidden" id="err-email">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group">
+          <label>Phone Number <span style="color:#ef4444">*</span></label>
+          <input type="tel" id="co-phone" placeholder="5550100" pattern="[0-9\-\+\(\) ]+" />
+          <div class="field-error hidden" id="err-phone">Please enter a valid phone number.</div>
+        </div>
+        <hr class="section-divider" />
+        <h3>Payment</h3>
+        <div class="form-group">
+          <label>Card Number <span style="color:#ef4444">*</span></label>
+          <input type="text" id="co-card" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)" />
+          <div class="field-error hidden" id="err-card">Please enter a valid 16-digit card number.</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-expiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" />
+            <div class="field-error hidden" id="err-expiry">Please enter a valid expiry (MM/YY).</div>
+          </div>
+          <div class="form-group">
+            <label>CVV <span style="color:#ef4444">*</span></label>
+            <input type="text" id="co-cvv" placeholder="123" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')" />
+            <div class="field-error hidden" id="err-cvv">Please enter a valid CVV.</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:8px;" onclick="fixedPlaceOrder()">Place Order</button>
+      </div>
+
+      <div class="checkout-order-panel" id="checkout-summary-panel">
+        <h3>Order Summary</h3>
+        <div id="checkout-order-items"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CONFIRMATION ══ -->
+<section id="page-confirm" class="hidden">
+  <div class="confirm-card">
+    <div class="confirm-icon">✓</div>
+    <h2>Order Confirmed!</h2>
+    <p class="order-number" id="confirm-order-num">Order #TS-000000</p>
+    <p class="confirm-subtitle">Thank you for your purchase! A confirmation email has been sent.</p>
+    <div class="order-summary-box" id="confirm-summary"></div>
+    <button class="btn btn-primary" onclick="showPage('products')">Continue Shopping</button>
+  </div>
+</section>
+
+<!-- ══ TOAST ══ -->
+<div class="toast hidden" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

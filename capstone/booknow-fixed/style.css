@@ -1,0 +1,287 @@
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0fdf4;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.hidden { display: none !important; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ── Navbar ── */
+.navbar {
+  background: #16a34a;
+  color: #fff;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(22,163,74,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-brand { font-size: 1.4rem; font-weight: 700; cursor: pointer; }
+.navbar-brand span { color: #bbf7d0; }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-links a { color: #fff; text-decoration: none; font-size: 0.95rem; opacity: 0.9; cursor: pointer; }
+.nav-links a:hover { opacity: 1; }
+.nav-user { color: #bbf7d0; font-size: 0.88rem; }
+
+/* ── Pages ── */
+.page { min-height: calc(100vh - 60px); }
+
+/* ── Login ── */
+#page-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+.login-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+}
+.login-card h2 { font-size: 1.7rem; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+.login-card .subtitle { color: #64748b; font-size: 0.95rem; margin-bottom: 32px; }
+.login-hint { margin-top: 18px; font-size: 0.82rem; color: #94a3b8; text-align: center; }
+
+/* ── Forms ── */
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 6px; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  color: #1e293b;
+  transition: border-color 0.2s;
+}
+.form-group input:focus { border-color: #16a34a; }
+.form-group input.input-error { border-color: #ef4444; }
+.field-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.section-divider { border: none; border-top: 1.5px solid #e2e8f0; margin: 24px 0; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  width: 100%;
+}
+.btn-primary { background: #16a34a; color: #fff; }
+.btn-primary:hover { background: #15803d; }
+.btn-outline { background: transparent; color: #16a34a; border: 1.5px solid #16a34a; }
+.btn-outline:hover { background: #f0fdf4; }
+
+/* fixed: btn-book-buggy not used in fixed app */
+.btn-book-buggy {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Error / Toast ── */
+.error-msg {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #1e293b;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  z-index: 999;
+}
+.toast.success { background: #16a34a; }
+.toast.error   { background: #dc2626; }
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 28px; padding-top: 36px; }
+.page-header h2 { font-size: 1.6rem; font-weight: 700; }
+.page-header p { color: #64748b; font-size: 0.95rem; margin-top: 4px; }
+
+/* ── Rooms Grid ── */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  padding-bottom: 60px;
+}
+.room-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.room-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.11); }
+.room-img-wrap { background: #f1f5f9; height: 200px; overflow: hidden; position: relative; }
+.room-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.room-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.room-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+
+/* ── Room description — fixed version uses clamp, buggy adds overflow-bug class ── */
+.room-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+/* BUG-007: overflow-bug class overrides the clamp and makes text overflow the card */
+.room-desc.overflow-bug {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.price-original { text-decoration: line-through; color: #94a3b8; font-size: 0.9rem; }
+.price-discounted { font-size: 1.15rem; font-weight: 700; color: #16a34a; }
+.badge-discount { background: #dcfce7; color: #16a34a; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+.availability-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge-unavailable { background: #fee2e2; color: #dc2626; }
+.badge-available { background: #dcfce7; color: #16a34a; }
+
+.btn-book {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+.btn-book:hover { background: #15803d; }
+
+/* ── Booking Layout ── */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  align-items: start;
+  padding-bottom: 60px;
+}
+.booking-form-panel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 32px;
+}
+.booking-form-panel h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+
+/* ── Booking Summary Panel ── */
+.summary-panel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 24px;
+}
+.summary-panel h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+.summary-room-name { font-weight: 600; color: #16a34a; margin-bottom: 12px; font-size: 0.95rem; }
+.summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: #475569; margin-bottom: 8px; }
+.summary-row.total {
+  border-top: 1.5px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+/* ── Confirmation ── */
+#page-confirm { padding: 80px 20px; text-align: center; }
+.confirm-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 48px 40px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.confirm-icon {
+  width: 72px;
+  height: 72px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.confirm-card h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; }
+.confirm-subtitle { color: #64748b; margin-bottom: 28px; }
+.confirm-ref { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; }
+.confirm-summary-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 18px 20px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+.confirm-summary-box h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: #374151; }
+.confirm-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: #475569; padding: 4px 0; }
+.confirm-row.total-row {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 8px;
+  padding-top: 10px;
+  font-weight: 700;
+  color: #1e293b;
+}

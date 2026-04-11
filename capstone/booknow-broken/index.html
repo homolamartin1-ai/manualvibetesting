@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Untitled</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar" id="main-navbar">
+  <div class="navbar-brand" onclick="showPage('rooms')">Book<span>Now</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('rooms')">Rooms</a>
+    <span id="nav-user" class="nav-user hidden"></span>
+  </div>
+</nav>
+
+<!-- ══ PAGE: LOGIN ══ -->
+<section id="page-login" class="page">
+  <div class="login-card">
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to book your perfect stay</p>
+    <div id="login-error" class="error-msg hidden"></div>
+    <div class="form-group">
+      <label for="login-user">Email Address</label>
+      <input type="text" id="login-user" placeholder="guest@booknow.com" autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <label for="login-pass">Password</label>
+      <input type="text" id="login-pass" placeholder="Enter your password" />
+    </div>
+    <button class="btn btn-primary" onclick="buggyLogin()">Sign In</button>
+    <p class="login-hint">Demo credentials: guest@booknow.com / stay2026</p>
+  </div>
+</section>
+
+<!-- ══ PAGE: ROOMS ══ -->
+<section id="page-rooms" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h2>Available Rooms</h2>
+        <p>Choose from our selection of rooms and suites</p>
+      </div>
+    </div>
+    <div class="rooms-grid" id="rooms-grid"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: BOOKING ══ -->
+<section id="page-booking" class="page hidden">
+  <div class="container">
+    <div class="page-header">
+      <h2>Complete Your Booking</h2>
+    </div>
+    <div class="booking-layout">
+      <div class="booking-form-panel">
+        <h3>Guest Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="book-fname" placeholder="John" />
+            <span class="field-error hidden" id="err-fname">First name is required</span>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="book-lname" placeholder="Smith" />
+            <span class="field-error hidden" id="err-lname">Last name is required</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" id="book-email" placeholder="john@example.com" />
+          <span class="field-error hidden" id="err-email">Valid email is required</span>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="book-phone" placeholder="+1 234 567 8900" />
+          <span class="field-error hidden" id="err-phone">Phone number is required</span>
+        </div>
+        <hr class="section-divider" />
+        <h3>Stay Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Check-in Date</label>
+            <input type="date" id="book-checkin" onchange="buggyUpdateTotal()" />
+            <span class="field-error hidden" id="err-checkin">Check-in date is required</span>
+          </div>
+          <div class="form-group">
+            <label>Check-out Date</label>
+            <input type="date" id="book-checkout" onchange="buggyUpdateTotal()" />
+            <span class="field-error hidden" id="err-checkout">Check-out date is required</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Number of Guests</label>
+          <input type="number" id="book-guests" value="1" min="1" />
+          <span class="field-error hidden" id="err-guests">At least 1 guest is required</span>
+        </div>
+        <button class="btn btn-book-buggy" style="margin-top:12px;width:100%" onclick="buggyPlaceBooking()">Book Now</button>
+      </div>
+      <div id="booking-summary"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CONFIRM ══ -->
+<section id="page-confirm" class="page hidden">
+  <div class="container">
+    <div class="confirm-card">
+      <div class="confirm-icon">✓</div>
+      <h2>Booking Confirmed!</h2>
+      <p class="confirm-subtitle">Your reservation has been placed. Check your email for details.</p>
+      <button class="btn btn-primary" style="max-width:260px;margin:0 auto;display:block" onclick="showPage('rooms')">Browse More Rooms</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body>
+</html>
