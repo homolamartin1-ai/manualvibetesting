@@ -42,16 +42,22 @@ Open Terminal (Spotlight → Terminal) and run:
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-Then restart Terminal.
+Then add uv to your PATH so Claude Desktop can find it:
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+```
+Then restart Terminal and verify: `uvx --version`
 
 **Windows:**
 Open PowerShell and run:
 ```
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-Then restart PowerShell.
+The Windows installer adds uv to PATH automatically. Restart PowerShell and verify: `uvx --version`
 
-Verify it worked: `uvx --version` — you should see a version number.
+> **Important:** The PATH step on Mac is required — not optional. Claude Desktop launches as a desktop
+> app and does not inherit your terminal PATH. If `uvx` is not on the system PATH, Claude Desktop
+> cannot start the MCP server and the hammer icon will not appear.
 
 ---
 
@@ -119,9 +125,11 @@ connection is working.
 - Make sure the email matches exactly what you use to log into Jira
 - Run `echo $JIRA_URL` in Terminal to confirm env vars are set (see mcp-env-setup.md)
 
-**uvx command not found:**
+**uvx command not found / hammer icon missing after correct config:**
 - Restart your terminal after installing uv
-- On Mac: make sure `~/.local/bin` is in your PATH
+- On Mac, run: `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc`
+- Then fully quit and reopen Claude Desktop — it must launch after the PATH is set
+- Verify with: `which uvx` — should return a path, not "not found"
 
 ---
 
