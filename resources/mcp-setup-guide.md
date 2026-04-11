@@ -6,14 +6,36 @@ Once done, Claude can create Jira tickets, read your project data, and generate 
 no copy-paste required.
 
 **Time to complete:** ~10 minutes
-**Requires:** Claude Desktop app (not the browser version), Python/uv (see Step 1)
+**Requires:** Claude Desktop app (not the browser version)
 
 ---
 
-## Step 1 — Install uv (Python package runner)
+## Step 1 — Generate your Jira API Token
 
-The Jira MCP server runs via `uv`. Install it once — you will not need to interact with Python
-directly after this.
+1. Go to **id.atlassian.com/manage-profile/security/api-tokens**
+2. Click **Create API token**
+3. Name it: `MCP Course`
+4. Click **Create**
+5. **Copy the token immediately** — you cannot view it again after closing this dialog
+
+---
+
+## Step 2 — Set environment variables
+
+Follow the instructions in `resources/mcp-env-setup.md` to set your three environment variables:
+
+- `JIRA_URL` — your Jira site URL, e.g. `https://yourname-testing.atlassian.net`
+- `JIRA_USERNAME` — the email you use to log into Jira
+- `JIRA_API_TOKEN` — the token you copied in Step 1
+
+The config file reads these variables automatically — your credentials never appear in any file
+you might accidentally share or commit to GitHub.
+
+---
+
+## Step 3 — Install uv (Python package runner)
+
+The Jira MCP server runs via `uvx` (included with uv). Install it once.
 
 **Mac:**
 Open Terminal (Spotlight → Terminal) and run:
@@ -29,49 +51,35 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ```
 Then restart PowerShell.
 
-Verify it worked by running: `uv --version` — you should see a version number.
-
----
-
-## Step 2 — Generate your Jira API Token
-
-1. Go to **id.atlassian.com/manage-profile/security/api-tokens**
-2. Click **Create API token**
-3. Name it: `MCP Course`
-4. Click **Create**
-5. **Copy the token immediately** — you cannot view it again after closing this dialog
-
----
-
-## Step 3 — Fill in the config template
-
-Open the file `resources/claude_desktop_config_template.json` in any text editor.
-
-Replace the three placeholder values:
-
-| Placeholder | Replace with |
-|---|---|
-| `YOUR_JIRA_SITE_URL` | Your Jira site URL, e.g. `https://yourname-testing.atlassian.net` |
-| `YOUR_EMAIL_ADDRESS` | The email you used to sign up for Jira |
-| `YOUR_API_TOKEN` | The token you copied in Step 2 |
-
-Save the file somewhere you can find it — you will copy it in the next step.
+Verify it worked: `uvx --version` — you should see a version number.
 
 ---
 
 ## Step 4 — Copy the config to Claude Desktop
 
+The config template is already filled in — it reads your credentials from the environment
+variables you set in Step 2. You do not need to edit it.
+
 **Mac:**
+```bash
+mkdir -p ~/Library/Application\ Support/Claude
+cp /path/to/course-repo/resources/claude_desktop_config_template.json \
+   ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+Or manually:
 1. Open Finder
 2. Press **Cmd + Shift + G** and paste: `~/Library/Application Support/Claude/`
-3. If a file called `claude_desktop_config.json` already exists — open it and add the
-   `"atlassian"` block inside the existing `"mcpServers"` object
-4. If it does not exist — copy your filled-in template there and rename it to
-   `claude_desktop_config.json`
+3. Copy `claude_desktop_config_template.json` into that folder
+4. Rename the copy to `claude_desktop_config.json`
+
+If a `claude_desktop_config.json` already exists, open both files and add the `"atlassian"` block
+inside the existing `"mcpServers"` object instead of replacing the whole file.
 
 **Windows:**
 1. Press **Win + R**, type `%APPDATA%\Claude\` and press Enter
-2. Same logic — add to existing file or copy template as `claude_desktop_config.json`
+2. Copy `claude_desktop_config_template.json` into that folder
+3. Rename it to `claude_desktop_config.json` (same merge rule applies if the file already exists)
 
 ---
 
@@ -109,10 +117,11 @@ connection is working.
 - Double-check your site URL includes `https://` and ends with `.atlassian.net`
 - Confirm the API token was copied in full — they are long strings
 - Make sure the email matches exactly what you use to log into Jira
+- Run `echo $JIRA_URL` in Terminal to confirm env vars are set (see mcp-env-setup.md)
 
-**uv command not found:**
+**uvx command not found:**
 - Restart your terminal after installing uv
-- On Mac: make sure `~/.cargo/bin` or `~/.local/bin` is in your PATH
+- On Mac: make sure `~/.local/bin` is in your PATH
 
 ---
 
