@@ -113,7 +113,7 @@ Claude should respond with your project list. MCP is active and working.
 
 ## What Claude can do with this connection
 
-- Create Jira tickets (Test, Bug, Task issue types)
+- Create Jira tickets (Task, Bug issue types)
 - Read all tickets in a project or sprint
 - Update ticket status, add comments, set priority
 - Generate test reports from sprint data
