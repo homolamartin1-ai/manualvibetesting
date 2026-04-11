@@ -1,9 +1,8 @@
 # MCP Setup Guide — Connecting Claude to Jira
 ## Vibetesting in 2026 — Course Resources
 
-This guide connects Claude Desktop to your Jira project using the Model Context Protocol (MCP).
-Once done, Claude can create Jira tickets, read your project data, and generate reports directly —
-no copy-paste required.
+Connects Claude Desktop to your Jira project. Once done, Claude can create tickets, read
+project data, and generate reports directly — no copy-paste required.
 
 **Time to complete:** ~10 minutes
 **Requires:** Claude Desktop app (not the browser version)
@@ -16,55 +15,49 @@ no copy-paste required.
 2. Click **Create API token**
 3. Name it: `MCP Course`
 4. Click **Create**
-5. **Copy the token immediately** — you cannot view it again after closing this dialog
+5. **Copy the token immediately** — you cannot view it again after closing
 
 ---
 
-## Step 2 — Set environment variables
+## Step 2 — Install uv
 
-Follow the instructions in `resources/mcp-env-setup.md` to set your three environment variables:
+The MCP server runs via `uvx` (included with uv).
 
-- `JIRA_URL` — your Jira site URL, e.g. `https://yourname-testing.atlassian.net`
-- `JIRA_USERNAME` — the email you use to log into Jira
-- `JIRA_API_TOKEN` — the token you copied in Step 1
-
-The config file reads these variables automatically — your credentials never appear in any file
-you might accidentally share or commit to GitHub.
-
----
-
-## Step 3 — Install uv (Python package runner)
-
-The Jira MCP server runs via `uvx` (included with uv). Install it once.
-
-**Mac:**
-Open Terminal (Spotlight → Terminal) and run:
-```
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-Then add uv to your PATH so Claude Desktop can find it:
+**Mac** — open Terminal and run:
 ```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
-Then restart Terminal and verify: `uvx --version`
 
-**Windows:**
-Open PowerShell and run:
-```
+**Windows** — open PowerShell and run:
+```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-The Windows installer adds uv to PATH automatically. Restart PowerShell and verify: `uvx --version`
 
-> **Important:** The PATH step on Mac is required — not optional. Claude Desktop launches as a desktop
-> app and does not inherit your terminal PATH. If `uvx` is not on the system PATH, Claude Desktop
-> cannot start the MCP server and the hammer icon will not appear.
+Verify: `uvx --version` — you should see a version number.
+
+---
+
+## Step 3 — Add your credentials to the config file
+
+Open the file `resources/claude_desktop_config_template.json` in any text editor and
+replace the three placeholder values with your own:
+
+```json
+"env": {
+  "JIRA_URL": "https://YOUR-SITE.atlassian.net",
+  "JIRA_USERNAME": "your@email.com",
+  "JIRA_API_TOKEN": "your-api-token-here"
+}
+```
+
+Save the file.
+
+> **Keep this file private.** Do not commit it to GitHub or share it — it contains your API token.
 
 ---
 
 ## Step 4 — Copy the config to Claude Desktop
-
-The config template is already filled in — it reads your credentials from the environment
-variables you set in Step 2. You do not need to edit it.
 
 **Mac:**
 ```bash
@@ -73,73 +66,61 @@ cp /path/to/course-repo/resources/claude_desktop_config_template.json \
    ~/Library/Application\ Support/Claude/claude_desktop_config.json
 ```
 
-Or manually:
-1. Open Finder
-2. Press **Cmd + Shift + G** and paste: `~/Library/Application Support/Claude/`
-3. Copy `claude_desktop_config_template.json` into that folder
-4. Rename the copy to `claude_desktop_config.json`
-
-If a `claude_desktop_config.json` already exists, open both files and add the `"atlassian"` block
-inside the existing `"mcpServers"` object instead of replacing the whole file.
+Or via Finder: press **Cmd + Shift + G**, paste `~/Library/Application Support/Claude/`,
+copy the file there and rename it to `claude_desktop_config.json`.
 
 **Windows:**
-1. Press **Win + R**, type `%APPDATA%\Claude\` and press Enter
-2. Copy `claude_desktop_config_template.json` into that folder
-3. Rename it to `claude_desktop_config.json` (same merge rule applies if the file already exists)
+Press **Win + R**, type `%APPDATA%\Claude\`, copy the file there and rename it to
+`claude_desktop_config.json`.
+
+> If `claude_desktop_config.json` already exists, open it and add the `"atlassian"` block
+> inside the existing `"mcpServers"` object — do not replace the whole file.
 
 ---
 
 ## Step 5 — Restart Claude Desktop
 
-Fully quit Claude Desktop (not just close the window — right-click the tray icon and Quit).
-Reopen it.
-
-In any Claude conversation, you should now see a small hammer icon (🔨) near the message
-input — this confirms MCP tools are active.
+Fully quit Claude Desktop (right-click the tray/menu bar icon → Quit — do not just close
+the window). Reopen it.
 
 ---
 
 ## Step 6 — Test the connection
 
-Send this message to Claude:
+Open a new conversation and send:
 
 ```
 List all projects in my Jira account.
 ```
 
-Claude should respond with your project list including the TECH project. If it does, the
-connection is working.
+Claude should respond with your project list. The hammer icon (🔨) near the message input
+confirms MCP tools are active.
 
 ---
 
 ## Troubleshooting
 
-**Claude does not show the hammer icon:**
-- Make sure you fully quit and restarted Claude Desktop
-- Check that the config file is named exactly `claude_desktop_config.json` (not `.txt` or `_template`)
-- Check that the JSON is valid — use jsonlint.com to paste and validate it
+**0 projects or "no tools available":**
+- Make sure you edited the credentials in the config file before copying it
+- Double-check JIRA_URL includes `https://` and ends with `.atlassian.net`
+- Confirm the API token is complete — they are long strings, easy to cut short
+- Validate the JSON at jsonlint.com — a missing comma breaks the whole file
 
-**Claude says it cannot connect to Jira:**
-- Double-check your site URL includes `https://` and ends with `.atlassian.net`
-- Confirm the API token was copied in full — they are long strings
-- Make sure the email matches exactly what you use to log into Jira
-- Run `echo $JIRA_URL` in Terminal to confirm env vars are set (see mcp-env-setup.md)
+**Hammer icon not visible:**
+- Open a brand new conversation (Cmd+N) — the icon only appears in new chats
+- The connection may still work without the icon — just send the test message anyway
 
-**uvx command not found / hammer icon missing after correct config:**
-- Restart your terminal after installing uv
-- On Mac, run: `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc`
-- Then fully quit and reopen Claude Desktop — it must launch after the PATH is set
-- Verify with: `which uvx` — should return a path, not "not found"
+**uvx not found:**
+- On Mac: run `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc`
+- Fully quit and reopen Claude Desktop after fixing PATH
 
 ---
 
 ## What Claude can do with this connection
 
-Once connected, Claude can:
 - Create Jira tickets (Test, Bug, Task issue types)
 - Read all tickets in a project or sprint
 - Update ticket status, add comments, set priority
-- List open bugs by severity
-- Read sprint data for test report generation
+- Generate test reports from sprint data
 
 You will use this in Sections 6, 8, and 10.
