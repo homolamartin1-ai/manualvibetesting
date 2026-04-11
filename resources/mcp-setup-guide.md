@@ -81,7 +81,7 @@ Press **Win + R**, type `%APPDATA%\Claude\`, copy the file there and rename it t
 ## Step 5 — Restart Claude Desktop
 
 Fully quit Claude Desktop (right-click the tray/menu bar icon → Quit — do not just close
-the window). Reopen it.
+the window). Reopen it and open a new conversation.
 
 ---
 
@@ -93,8 +93,7 @@ Open a new conversation and send:
 List all projects in my Jira account.
 ```
 
-Claude should respond with your project list. The hammer icon (🔨) near the message input
-confirms MCP tools are active.
+Claude should respond with your project list. MCP is active and working.
 
 ---
 
@@ -105,10 +104,6 @@ confirms MCP tools are active.
 - Double-check JIRA_URL includes `https://` and ends with `.atlassian.net`
 - Confirm the API token is complete — they are long strings, easy to cut short
 - Validate the JSON at jsonlint.com — a missing comma breaks the whole file
-
-**Hammer icon not visible:**
-- Open a brand new conversation (Cmd+N) — the icon only appears in new chats
-- The connection may still work without the icon — just send the test message anyway
 
 **uvx not found:**
 - On Mac: run `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc`
