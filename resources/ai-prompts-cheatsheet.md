@@ -1,5 +1,5 @@
 # AI Prompts Cheat Sheet for Manual Testers
-> 25 ready-to-use prompts for Vibetesting in 2026
+> 30 ready-to-use prompts for Vibetesting in 2026
 > Copy, paste, and adapt these for your own projects.
 
 ---
@@ -245,4 +245,57 @@ Here is the changelog for version [X.X] of our application:
 [paste changelog]
 Based on these changes, generate a prioritized list of regression test areas.
 For each area, explain why the change might have introduced a regression risk.
+```
+
+---
+
+## CATEGORY 6: Prompt Iteration (Section 4 · Clip 6 Demo)
+
+These are the exact prompts used in the Clip 6 live demo. Use them as a template for
+any feature — replace the TechShop-specific details with your own app.
+
+**Prompt 26 — Initial four-part prompt (Clip 5 → Clip 6 starting point)**
+```
+You are a senior QA engineer with experience testing e-commerce applications.
+
+The feature under test is the TechShop login form. It accepts a username and password.
+Valid credentials are any registered user. The form should reject empty fields, show an
+error message for wrong credentials, and mask the password input.
+Known issue: BUG-002 — empty fields are currently not validated.
+
+Generate 5 test cases covering:
+- 1 happy path (valid login)
+- 2 negative validation scenarios (wrong credentials, empty fields)
+- 1 edge case (special characters in username)
+- 1 test for the known bug BUG-002
+
+Format as a table: ID | Title | Preconditions | Steps | Expected Result | Priority
+```
+
+**Prompt 27 — Fix a UI mismatch in the output**
+```
+In test case [TC-ID], step [N] says "[what AI wrote]" but in TechShop
+the button text is actually "[correct text]".
+Update that step to match the real UI.
+```
+
+**Prompt 28 — Fix a wrong priority**
+```
+Update the priority of [TC-ID] from [current priority] to [correct priority].
+[Reason — e.g. empty field validation is High priority in our organisation, not Low.]
+```
+
+**Prompt 29 — Extend with additional edge cases (same conversation)**
+```
+Add 2 more edge cases to the test set:
+- A password that contains only spaces
+- A username with special characters: < > " '
+Keep the same table format and continue the ID numbering.
+```
+
+**Prompt 30 — Fix vague expected results**
+```
+The expected results in [TC-ID] and [TC-ID] are too vague — they just say
+"error message displayed". Update them to specify the exact error text
+the form should show for each scenario.
 ```
