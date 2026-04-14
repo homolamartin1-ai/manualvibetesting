@@ -1,5 +1,5 @@
 # AI Prompts Cheat Sheet for Manual Testers
-> 30 ready-to-use prompts for Vibetesting in 2026
+> 51 ready-to-use prompts for Vibetesting in 2026
 > Copy, paste, and adapt these for your own projects.
 
 ---
@@ -298,4 +298,234 @@ Keep the same table format and continue the ID numbering.
 The expected results in [TC-ID] and [TC-ID] are too vague — they just say
 "error message displayed". Update them to specify the exact error text
 the form should show for each scenario.
+```
+
+---
+
+## CATEGORY 7: Understanding the Application (Section 3–4)
+
+These prompts are used when you first encounter an application and need to understand
+what it does and what should be validated — with or without a requirements document.
+
+**Prompt 31 — First vibe test: spot bugs from HTML source (Section 3 · Clip 7)**
+```
+You are a software tester. Look at this HTML for a login form.
+What bugs, usability issues, or missing validations do you see?
+Keep your answer to the five most important findings.
+[Paste page HTML]
+```
+
+**Prompt 32 — Feature inventory from HTML and JavaScript (Section 4 · Clip 3)**
+```
+Based on this HTML and JavaScript, describe all the features and
+user interactions on this page. Also list any validations you would
+expect a well-built version of this app to have.
+[Paste index.html content]
+[Paste app.js content]
+```
+
+---
+
+## CATEGORY 8: Test Plan Generation (Section 5)
+
+**Prompt 33 — Test plan from requirements document — Gemini (Section 5 · Clip 2)**
+```
+Based on the requirements document I attached, write a concise test plan
+for the current sprint.
+Features in scope: [list features].
+Out of scope: [list exclusions].
+Tester: [headcount, days available, browser/environment].
+Include: scope, approach, entry criteria, exit criteria, prioritisation, risks.
+Exit criteria must be specific — all High tests executed, zero Priority 1 bugs
+open, max two Priority 2 bugs open with developer acknowledgement.
+```
+
+**Prompt 34 — Rewrite risks section with specific project-grounded risks (Section 5 · Clip 2)**
+```
+Rewrite the risks section with three specific risks.
+First: [Bug ID] — [description] — may block [area] tests until resolved.
+Second: [environment constraint — e.g. no staging, all tests run on local file].
+Third: [session/state constraint — e.g. cart state not persisted across sessions].
+```
+
+**Prompt 35 — Agentic test plan from repo files — Windsurf (Section 5 · Clip 3)**
+```
+Read the requirements in [path/requirements.md] and bug list in [path/bugs.md].
+Generate a sprint test plan covering: scope, approach, entry criteria, exit criteria,
+prioritization, and risks.
+Exit criteria: all High tests executed, zero Priority 1 bugs open,
+max two Priority 2 bugs open.
+Note [BUG-ID] as a test blocker for [area] scenarios.
+Save as [path/test-plan-sprint-1.md]
+```
+
+---
+
+## CATEGORY 9: Scenario-First Test Case Design (Section 6)
+
+Two-step approach: generate all scenario titles first → select the ones you want →
+convert to full test cases. Keeps scope in your control.
+
+**Prompt 36 — Generate all positive test scenarios, titles only (Section 6 · Clip 4)**
+```
+You are a QA engineer testing [App Name], a [type] application.
+Based on the requirements and app code I have attached, generate all positive
+test scenarios for each of these features: [feature 1], [feature 2], [feature 3], [feature 4].
+List every scenario where the application should work correctly when used as intended.
+Present as a numbered list grouped by feature — scenario titles only, no steps yet.
+```
+
+**Prompt 37 — Convert selected scenarios to full test cases — chatbot (Section 6 · Clip 4)**
+```
+Turn scenarios [list the numbers you selected] into full test cases.
+Format each as: TC ID, Title, Preconditions, Steps numbered one per line,
+Expected Result, Priority. Group by feature.
+```
+
+**Prompt 38 — Create test case Tasks directly in Jira via MCP — Claude Desktop (Section 6 · Clip 5)**
+```
+Turn scenarios [the numbers you selected] into Jira Tasks in project [PROJECT KEY].
+Each task: summary, preconditions, numbered steps, expected result,
+label by feature name, priority [High/Medium/Low].
+Assign to the current sprint.
+```
+
+**Prompt 39 — Auto-fix a bug and open a pull request — GitHub Copilot (Section 6 · Clip 7)**
+```
+The [feature] in [file path] [describes the bug — what it accepts or does wrong].
+Find the relevant code, write a fix that [describes correct behaviour],
+and open a PR against main.
+Title: Fix: [short fix description]
+```
+
+---
+
+## CATEGORY 10: Autonomous Exploratory Testing (Section 7)
+
+**Prompt 40 — Antigravity: run a full autonomous exploratory session (Section 7 · Clip 1)**
+```
+Run an exploratory testing session on the [App Name] application in [path/to/app].
+Open app in the browser. Explore all user-facing features — [list features].
+Test interactions, check validations, probe edge cases, and surface any bugs,
+missing functionality, or unexpected behaviour you find.
+Report each finding as a short title and one-sentence description.
+```
+
+**Prompt 41 — Convert Antigravity session findings to bug reports — Claude (Section 7 · Clip 3)**
+```
+I just finished an exploratory testing session on [feature/app name].
+Here are the session findings from Antigravity:
+[Paste exported session notes]
+Convert each confirmed finding into a professional bug report with:
+Title, Environment, Steps to Reproduce starting from a logged-in state,
+Expected Result, Actual Result, Severity.
+Keep each report concise and precise.
+```
+
+---
+
+## CATEGORY 11: Bug Report Workflows (Section 8)
+
+**Prompt 42 — Single bug report from rough notes — ChatGPT (Section 8 · Clip 2)**
+```
+Write a professional bug report for this finding: [describe bug in plain language].
+App: [App Name], [environment — browser, OS].
+Include: Title, Severity, Priority, Steps to Reproduce starting from [starting state],
+Expected Result, Actual Result.
+Keep it concise.
+```
+
+**Prompt 43 — Batch bug reports from multiple findings — ChatGPT (Section 8 · Clip 2)**
+```
+Write concise bug reports for each of these findings from a [feature] testing session.
+[Number each finding — one sentence each]
+App: [App Name], [browser, OS].
+Format: Title, Severity, Steps from [starting state with preconditions],
+Expected, Actual.
+Separate each with a horizontal rule.
+```
+
+**Prompt 44 — Code-grounded bug reports and Jira Bug tickets — Cursor + MCP (Section 8 · Clip 3)**
+```
+Look at [file path 1] and [file path 2].
+I found the following bugs during testing:
+[Number each bug — one sentence each]
+For each bug, write a professional bug report including Title, Severity, Priority,
+Steps to Reproduce, Expected Result, Actual Result, and the relevant code location.
+Then create each as a Jira Bug issue in project [PROJECT KEY],
+label by feature area, set priority to match severity, assign to current sprint.
+```
+
+**Prompt 45 — Severity and priority with business risk reasoning (Section 8 · Clip 4)**
+```
+I found this bug: [brief description].
+The application is [describe what the app does and who uses it].
+What severity and priority would you assign?
+What is the business risk if this ships unfixed?
+Explain your reasoning for each rating.
+```
+
+---
+
+## CATEGORY 12: Verification and Regression Testing (Section 9)
+
+**Prompt 46 — Generate verification checklist from bug list (Section 9 · Clip 2)**
+```
+Here is a list of bugs that were fixed in a web app.
+For each bug, write a three-step verification procedure.
+[Paste bug titles or IDs with brief descriptions]
+```
+
+**Prompt 47 — Regression scope after a specific fix (Section 9 · Clip 3)**
+```
+A developer fixed a [describe the fix — e.g. discount calculation bug]
+in the [area] of a [type of app].
+What other areas of the app should I regression test to make sure the fix
+did not introduce new problems?
+```
+
+**Prompt 48 — Prioritise regression areas by risk (Section 9 · Clip 3)**
+```
+From this regression list, which [N] areas are highest risk given that only
+[describe the exact change that was made]?
+Explain your reasoning.
+[Paste regression list from the previous prompt]
+```
+
+---
+
+## CATEGORY 13: Test Summary Reports (Section 10)
+
+**Prompt 49 — Test report from manually gathered data — Claude web (Section 10 · Clip 2)**
+```
+Write a professional test summary report based on the following testing data.
+Application: [App Name].
+Testing period: [X days].
+Test environment: [browser, environment description].
+Test execution: total [N], executed [N], passed [N], failed [N],
+blocked [N] ([reason]), not executed [N] ([reason]).
+Defect summary: total [N], Critical [N], High [N], Medium [N], Low [N],
+resolved [N], still open [N] ([ticket IDs]).
+Write: executive summary, scope, execution summary, defect summary,
+outstanding risks, and a go/no-go recommendation.
+Keep it professional but readable for a non-technical stakeholder.
+```
+
+**Prompt 50 — Make go/no-go conditional — follow-up (Section 10 · Clip 2)**
+```
+Update the conclusion to make it conditional.
+Recommend go-ahead for release if [BUG-ID] and [BUG-ID] are resolved before deployment,
+with [BUG-ID] tracked as a known issue for the next sprint.
+```
+
+**Prompt 51 — Agentic test report from live Jira via MCP — Claude Desktop (Section 10 · Clip 3)**
+```
+Read all issues in Jira project [PROJECT KEY] for [sprint name].
+Count test case Tasks by label status — how many passed, failed, blocked, not executed.
+Count Bug issues by priority — Critical, High, Medium, Low.
+List which bugs are resolved and which are still open with their ticket numbers.
+Then generate a professional test summary report including: executive summary,
+execution summary with pass rate, defect summary by severity, outstanding risks
+from open bugs, and a go/no-go recommendation with rationale.
+Save the report as [filename.md] in my project folder.
 ```
