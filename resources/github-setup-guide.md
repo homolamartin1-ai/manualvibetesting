@@ -87,11 +87,98 @@ git add filename.md
 git commit -m "Add sprint 1 test plan"
 ```
 
-### Push to GitHub
+### Push to GitHub — authentication on first push
 
+When you run `git push` for the first time, Git needs to verify who you are.
+There are two ways to authenticate: HTTPS (username + token) or SSH (key pair).
+
+---
+
+#### Option 1 — HTTPS with a Personal Access Token (simpler, recommended for beginners)
+
+GitHub no longer accepts your account password over HTTPS. You need a **Personal Access Token** instead.
+
+**Generate a token:**
+1. Go to **github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)**
+2. Click **Generate new token (classic)**
+3. Give it a name like `course-push`
+4. Set expiration to 90 days
+5. Check the **repo** scope
+6. Click **Generate token** and copy it immediately — you cannot see it again
+
+**Use the token when pushing:**
 ```
 git push
 ```
+When prompted:
+- **Username:** your GitHub username
+- **Password:** paste your Personal Access Token (not your account password)
+
+**Save credentials so you are not prompted every time (Mac):**
+```
+git config --global credential.helper osxkeychain
+```
+
+**Save credentials so you are not prompted every time (Windows):**
+```
+git config --global credential.helper manager
+```
+
+After saving, Git remembers the token and you will not be asked again on that machine.
+
+---
+
+#### Option 2 — SSH key (more secure, no token needed after setup)
+
+SSH uses a key pair stored on your machine. Once set up, `git push` works silently — no password, no token.
+
+**Step 1 — Generate an SSH key**
+
+Open Terminal (Mac) or Git Bash (Windows) and run:
+```
+ssh-keygen -t ed25519 -C "your@email.com"
+```
+Press Enter three times to accept the default file location and skip the passphrase.
+
+This creates two files in `~/.ssh/`:
+- `id_ed25519` — your private key (never share this)
+- `id_ed25519.pub` — your public key (this goes to GitHub)
+
+**Step 2 — Copy the public key**
+
+Mac:
+```
+cat ~/.ssh/id_ed25519.pub | pbcopy
+```
+
+Windows (Git Bash):
+```
+cat ~/.ssh/id_ed25519.pub | clip
+```
+
+**Step 3 — Add the key to GitHub**
+1. Go to **github.com → Settings → SSH and GPG keys**
+2. Click **New SSH key**
+3. Give it a title like `my laptop`
+4. Paste the public key into the Key field
+5. Click **Add SSH key**
+
+**Step 4 — Switch your clone to use SSH**
+
+When you cloned earlier you used the HTTPS URL. Switch it to SSH:
+```
+git remote set-url origin git@github.com:YOUR-USERNAME/REPO-NAME.git
+```
+
+**Step 5 — Test the connection**
+```
+ssh -T git@github.com
+```
+You should see: `Hi YOUR-USERNAME! You've successfully authenticated.`
+
+Now `git push` works with no prompts.
+
+---
 
 Your file now appears in your GitHub repo. After you complete the capstone in Section 12,
 your repo will contain a full testing portfolio — test plan, test cases, bug reports,
@@ -122,9 +209,8 @@ Run `git --version` again — it should have triggered the install prompt.
 If not, install Xcode Command Line Tools: `xcode-select --install`
 
 **Clone fails with "Authentication failed"**
-GitHub requires a Personal Access Token instead of your password for HTTPS cloning.
-Go to GitHub → Settings → Developer settings → Personal access tokens → Generate new token.
-Use that token as your password when prompted.
+GitHub no longer accepts your account password. Use a Personal Access Token or switch to SSH.
+See the "Push to GitHub — authentication on first push" section above for step-by-step instructions.
 
 **Folder already exists error**
 You already have a folder with that name. Either delete it or clone into a different location.
