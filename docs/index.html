@@ -83,8 +83,26 @@
     .hero {
       padding-top: 120px;
       padding-bottom: 60px;
-      text-align: center;
       background: radial-gradient(ellipse at 50% 0%, #1e1040 0%, var(--bg) 70%);
+    }
+    .hero .container {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .hero-image {
+      flex-shrink: 0;
+      width: 320px;
+    }
+    .hero-image img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(124,92,252,0.25);
+      border: 1px solid var(--border);
     }
     .hero .badge {
       display: inline-block;
@@ -100,7 +118,7 @@
       margin-bottom: 24px;
     }
     .hero h1 {
-      font-size: clamp(28px, 5vw, 52px);
+      font-size: clamp(26px, 4vw, 46px);
       font-weight: 800;
       line-height: 1.15;
       color: var(--white);
@@ -108,10 +126,14 @@
     }
     .hero h1 span { color: var(--accent); }
     .hero p.subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
+      font-size: clamp(15px, 2vw, 18px);
       color: var(--muted);
-      max-width: 620px;
-      margin: 0 auto 36px;
+      margin-bottom: 36px;
+    }
+    @media (max-width: 720px) {
+      .hero .container { flex-direction: column; }
+      .hero-image { width: 100%; max-width: 340px; margin: 0 auto; order: -1; }
+      .hero-text { text-align: center; }
     }
     .cta-btn {
       display: inline-block;
@@ -331,20 +353,25 @@
   <!-- ── HERO ── -->
   <section class="hero">
     <div class="container">
-      <div class="badge">New Course on Udemy</div>
+      <div class="hero-text">
+        <div class="badge">New Course on Udemy</div>
 
-      <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
-      <h1 data-lang="hi">AI-संचालित टेस्टिंग वर्कफ़्लो<br><span>जो एक पूरे स्प्रिंट को<br>एक सुबह में पूरा करता है।</span></h1>
+        <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
+        <h1 data-lang="hi">AI-संचालित टेस्टिंग वर्कफ़्लो<br><span>जो एक पूरे स्प्रिंट को<br>एक सुबह में पूरा करता है।</span></h1>
 
-      <p class="subtitle" data-lang="en">Learn to combine your judgment as a tester with 9 AI tools — and produce the output of a senior QA engineer at twice the speed. Every tool has a free tier.</p>
-      <p class="subtitle" data-lang="hi">9 AI टूल्स के साथ अपनी टेस्टर की समझ को जोड़ना सीखें — और एक सीनियर QA इंजीनियर का आउटपुट दोगुनी स्पीड से तैयार करें। हर टूल का फ्री टियर है।</p>
+        <p class="subtitle" data-lang="en">Learn to combine your judgment as a tester with 9 AI tools — and produce the output of a senior QA engineer at twice the speed. Every tool has a free tier.</p>
+        <p class="subtitle" data-lang="hi">9 AI टूल्स के साथ अपनी टेस्टर की समझ को जोड़ना सीखें — और एक सीनियर QA इंजीनियर का आउटपुट दोगुनी स्पीड से तैयार करें। हर टूल का फ्री टियर है।</p>
 
-      <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
-        <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
-        <span data-lang="hi" style="display:none">Udemy पर एनरोल करें — फ्री प्रीव्यू उपलब्ध</span>
-      </a>
-      <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
-      <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · सभी स्तर · 9 टूल्स · सभी फ्री</p>
+        <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
+          <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
+          <span data-lang="hi" style="display:none">Udemy पर एनरोल करें — फ्री प्रीव्यू उपलब्ध</span>
+        </a>
+        <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
+        <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · सभी स्तर · 9 टूल्स · सभी फ्री</p>
+      </div>
+      <div class="hero-image">
+        <img src="course_thumbnail.png" alt="Vibetesting — Manual Testing with AI Tools" />
+      </div>
     </div>
   </section>
 
