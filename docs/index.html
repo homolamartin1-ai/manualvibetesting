@@ -97,7 +97,38 @@
         rgba(10,8,30,0.60) 50%,
         rgba(10,8,30,0.85) 100%);
     }
-    .hero .container { position: relative; z-index: 1; }
+    .hero .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+    .hero-video {
+      flex-shrink: 0;
+      width: 480px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .hero-video iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .hero .container { flex-direction: column; }
+      .hero-text { text-align: center; }
+      .hero-video { width: 100%; }
+    }
     .hero .badge {
       display: inline-block;
       background: rgba(124,92,252,0.15);
@@ -149,24 +180,6 @@
       margin-top: 12px;
     }
 
-    /* ── VIDEO ── */
-    .video-section {
-      padding-top: 0;
-      padding-bottom: 60px;
-      text-align: center;
-    }
-    .video-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    .video-wrapper video {
-      width: 100%;
-      display: block;
-    }
 
     /* ── STATS ── */
     .stats {
@@ -345,34 +358,30 @@
   <!-- ── HERO ── -->
   <section class="hero">
     <div class="container">
-      <div class="badge">New Course on Udemy</div>
+      <div class="hero-text">
+        <div class="badge">New Course on Udemy</div>
 
-      <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
-      <h1 data-lang="hi">AI-संचालित टेस्टिंग वर्कफ़्लो<br><span>जो एक पूरे स्प्रिंट को<br>एक सुबह में पूरा करता है।</span></h1>
+        <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
+        <h1 data-lang="hi">AI-संचालित टेस्टिंग वर्कफ़्लो<br><span>जो एक पूरे स्प्रिंट को<br>एक सुबह में पूरा करता है।</span></h1>
 
-      <p class="subtitle" data-lang="en">Learn to combine your judgment as a tester with 9 AI tools — and produce the output of a senior QA engineer at twice the speed. Every tool has a free tier.</p>
-      <p class="subtitle" data-lang="hi">9 AI टूल्स के साथ अपनी टेस्टर की समझ को जोड़ना सीखें — और एक सीनियर QA इंजीनियर का आउटपुट दोगुनी स्पीड से तैयार करें। हर टूल का फ्री टियर है।</p>
+        <p class="subtitle" data-lang="en">Learn to combine your judgment as a tester with 9 AI tools — and produce the output of a senior QA engineer at twice the speed. Every tool has a free tier.</p>
+        <p class="subtitle" data-lang="hi">9 AI टूल्स के साथ अपनी टेस्टर की समझ को जोड़ना सीखें — और एक सीनियर QA इंजीनियर का आउटपुट दोगुनी स्पीड से तैयार करें। हर टूल का फ्री टियर है।</p>
 
-      <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
-        <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
-        <span data-lang="hi" style="display:none">Udemy पर एनरोल करें — फ्री प्रीव्यू उपलब्ध</span>
-      </a>
-      <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
-      <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · सभी स्तर · 9 टूल्स · सभी फ्री</p>
-    </div>
-  </section>
+        <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
+          <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
+          <span data-lang="hi" style="display:none">Udemy पर एनरोल करें — फ्री प्रीव्यू उपलब्ध</span>
+        </a>
+        <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
+        <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · सभी स्तर · 9 टूल्स · सभी फ्री</p>
+      </div>
 
-  <!-- ── VIDEO ── -->
-  <section class="video-section">
-    <div class="container">
-      <div class="video-wrapper">
+      <div class="hero-video">
         <iframe
           src="https://www.youtube.com/embed/sXmSjo7NZlE?rel=0&modestbranding=1"
           title="Vibetesting in 2026 — Course Preview"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style="width:100%;aspect-ratio:16/9;display:block;">
+          allowfullscreen>
         </iframe>
       </div>
     </div>
