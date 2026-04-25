@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vibetesting in 2026 — Manual Testing with AI Tools</title>
+  <meta name="description" content="Learn the AI-powered testing workflow that turns a full sprint cycle into a single morning. 9 tools. All free tiers. Real deliverables." />
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'PASTE_YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=PASTE_YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d1a;
+      --surface:  #16162a;
+      --border:   #2a2a4a;
+      --accent:   #7c5cfc;
+      --accent2:  #00d4aa;
+      --text:     #e8e8f0;
+      --muted:    #8888aa;
+      --white:    #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── LANGUAGE TOGGLE ── */
+    .lang-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,13,26,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 24px;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 24px; }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero {
+      padding-top: 120px;
+      padding-bottom: 60px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, #1e1040 0%, var(--bg) 70%);
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(124,92,252,0.15);
+      border: 1px solid rgba(124,92,252,0.4);
+      color: #a78bfa;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p.subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 17px;
+      font-weight: 700;
+      padding: 16px 40px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(124,92,252,0.4);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(124,92,252,0.6);
+    }
+    .cta-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    /* ── VIDEO ── */
+    .video-section {
+      padding-top: 0;
+      padding-bottom: 60px;
+      text-align: center;
+    }
+    .video-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat .number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent2);
+    }
+    .stat .label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── DELIVERABLES ── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .deliverable {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .deliverable .icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .deliverable h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .deliverable p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── TOOLS ── */
+    .tools-section { background: var(--surface); }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .tool-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .tool-card .tool-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .tool-card .tool-use {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .tool-card .free-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* ── FOR WHO ── */
+    .for-who-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .for-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .for-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .for-card h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .for-card p { font-size: 14px; color: var(--muted); }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 100%, #1e1040 0%, var(--bg) 70%);
+    }
+    .final-cta h2 {
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .final-cta p { color: var(--muted); margin-bottom: 36px; font-size: 17px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── LANGUAGE VISIBILITY ── */
+    [data-lang="hi"] { display: none; }
+    body.lang-hi [data-lang="en"] { display: none; }
+    body.lang-hi [data-lang="hi"] { display: block; }
+    body.lang-hi .deliverable [data-lang="hi"],
+    body.lang-hi .tool-card [data-lang="hi"],
+    body.lang-hi .for-card [data-lang="hi"],
+    body.lang-hi .stat [data-lang="hi"] { display: block; }
+    .deliverable [data-lang="hi"],
+    .tool-card [data-lang="hi"],
+    .for-card [data-lang="hi"],
+    .stat [data-lang="hi"] { display: none; }
+
+    @media (max-width: 600px) {
+      .stats { gap: 32px; }
+      section { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language bar -->
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">English</button>
+    <button class="lang-btn" onclick="setLang('hi')" id="btn-hi">हिन्दी</button>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">New Course on Udemy</div>
+
+      <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
+      <h1 data-lang="hi">AI-संचालित टेस्टिंग वर्कफ़्लो<br><span>जो एक पूरे स्प्रिंट को<br>एक सुबह में पूरा करता है।</span></h1>
+
+      <p class="subtitle" data-lang="en">Learn to combine your judgment as a tester with 9 AI tools — and produce the output of a senior QA engineer at twice the speed. Every tool has a free tier.</p>
+      <p class="subtitle" data-lang="hi">9 AI टूल्स के साथ अपनी टेस्टर की समझ को जोड़ना सीखें — और एक सीनियर QA इंजीनियर का आउटपुट दोगुनी स्पीड से तैयार करें। हर टूल का फ्री टियर है।</p>
+
+      <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
+        <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
+        <span data-lang="hi" style="display:none">Udemy पर एनरोल करें — फ्री प्रीव्यू उपलब्ध</span>
+      </a>
+      <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
+      <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · सभी स्तर · 9 टूल्स · सभी फ्री</p>
+    </div>
+  </section>
+
+  <!-- ── VIDEO ── -->
+  <section class="video-section">
+    <div class="container">
+      <div class="video-wrapper">
+        <video controls preload="metadata" poster="">
+          <source src="course_promo.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="stats">
+    <div class="stat">
+      <div class="number">9</div>
+      <div class="label" data-lang="en">AI Tools</div>
+      <div class="label" data-lang="hi">AI टूल्स</div>
+    </div>
+    <div class="stat">
+      <div class="number">12</div>
+      <div class="label" data-lang="en">Sections</div>
+      <div class="label" data-lang="hi">सेक्शन</div>
+    </div>
+    <div class="stat">
+      <div class="number">40+</div>
+      <div class="label" data-lang="en">Jira Test Cases</div>
+      <div class="label" data-lang="hi">Jira टेस्ट केसेस</div>
+    </div>
+    <div class="stat">
+      <div class="number">18</div>
+      <div class="label" data-lang="en">Real Bugs to Find</div>
+      <div class="label" data-lang="hi">असली बग्स</div>
+    </div>
+    <div class="stat">
+      <div class="number">$0</div>
+      <div class="label" data-lang="en">Tool Cost</div>
+      <div class="label" data-lang="hi">टूल की लागत</div>
+    </div>
+  </div>
+
+  <!-- ── DELIVERABLES ── -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-lang="en">What You Will Produce</div>
+      <div class="section-label" data-lang="hi">आप क्या बनाएंगे</div>
+
+      <h2 class="section-title" data-lang="en">Real deliverables. Not just knowledge.</h2>
+      <h2 class="section-title" data-lang="hi">असली आउटपुट। सिर्फ ज्ञान नहीं।</h2>
+
+      <p class="section-sub" data-lang="en">Every section produces something you can show a hiring manager. By the end you have a complete testing portfolio.</p>
+      <p class="section-sub" data-lang="hi">हर सेक्शन में कुछ ऐसा बनता है जो आप hiring manager को दिखा सकते हैं। अंत में आपके पास एक पूरा testing portfolio होगा।</p>
+
+      <div class="deliverables">
+        <div class="deliverable">
+          <div class="icon">📋</div>
+          <div>
+            <h3 data-lang="en">Sprint Test Plan</h3>
+            <h3 data-lang="hi">स्प्रिंट टेस्ट प्लान</h3>
+            <p data-lang="en">Built with Gemini in Google Docs and with Windsurf from your repo files</p>
+            <p data-lang="hi">Gemini और Windsurf से repo फाइल्स के आधार पर तैयार</p>
+          </div>
+        </div>
+        <div class="deliverable">
+          <div class="icon">✅</div>
+          <div>
+            <h3 data-lang="en">40+ Jira Test Cases</h3>
+            <h3 data-lang="hi">40+ Jira टेस्ट केसेस</h3>
+            <p data-lang="en">Generated with Claude and logged directly into Jira via MCP — no copy-paste</p>
+            <p data-lang="hi">Claude से बनाए और MCP के जरिए सीधे Jira में लॉग किए</p>
+          </div>
+        </div>
+        <div class="deliverable">
+          <div class="icon">🚀</div>
+          <div>
+            <h3 data-lang="en">Exploratory Test Session</h3>
+            <h3 data-lang="hi">एक्सप्लोरेटरी टेस्ट सेशन</h3>
+            <p data-lang="en">Run autonomously by Antigravity — you review and judge the findings</p>
+            <p data-lang="hi">Antigravity द्वारा स्वचालित रूप से चलाया गया — आप findings की समीक्षा करें</p>
+          </div>
+        </div>
+        <div class="deliverable">
+          <div class="icon">🐛</div>
+          <div>
+            <h3 data-lang="en">Professional Bug Reports</h3>
+            <h3 data-lang="hi">प्रोफेशनल बग रिपोर्ट</h3>
+            <p data-lang="en">Generated with ChatGPT and Cursor — with exact code references in Jira</p>
+            <p data-lang="hi">ChatGPT और Cursor से बनाई गई — Jira में exact code references के साथ</p>
+          </div>
+        </div>
+        <div class="deliverable">
+          <div class="icon">📊</div>
+          <div>
+            <h3 data-lang="en">Test Summary Report</h3>
+            <h3 data-lang="hi">टेस्ट समरी रिपोर्ट</h3>
+            <p data-lang="en">Complete go/no-go recommendation pulled from live Jira data via MCP</p>
+            <p data-lang="hi">MCP के जरिए live Jira data से complete go/no-go recommendation</p>
+          </div>
+        </div>
+        <div class="deliverable">
+          <div class="icon">🎯</div>
+          <div>
+            <h3 data-lang="en">Capstone Project</h3>
+            <h3 data-lang="hi">कैपस्टोन प्रोजेक्ट</h3>
+            <p data-lang="en">Full testing cycle on a new application — independently, start to finish</p>
+            <p data-lang="hi">एक नए application पर पूरा testing cycle — स्वतंत्र रूप से, शुरू से अंत तक</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOOLS ── -->
+  <section class="tools-section">
+    <div class="container">
+      <div class="section-label" data-lang="en">The Tools</div>
+      <div class="section-label" data-lang="hi">टूल्स</div>
+
+      <h2 class="section-title" data-lang="en">9 tools. All free tiers.</h2>
+      <h2 class="section-title" data-lang="hi">9 टूल्स। सभी फ्री।</h2>
+
+      <p class="section-sub" data-lang="en">You do not need to spend anything beyond the course to build a world-class AI testing workflow.</p>
+      <p class="section-sub" data-lang="hi">एक world-class AI testing workflow बनाने के लिए course के अलावा कुछ भी खर्च करने की जरूरत नहीं।</p>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-name">Claude</div>
+          <div class="tool-use" data-lang="en">Test cases, test plans, bug reports</div>
+          <div class="tool-use" data-lang="hi">टेस्ट केसेस, प्लान, बग रिपोर्ट</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-use" data-lang="en">Batch bug report generation</div>
+          <div class="tool-use" data-lang="hi">Batch बग रिपोर्ट</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Gemini</div>
+          <div class="tool-use" data-lang="en">Test plans with Google Docs</div>
+          <div class="tool-use" data-lang="hi">Google Docs के साथ टेस्ट प्लान</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Cursor</div>
+          <div class="tool-use" data-lang="en">Code-grounded bug reports</div>
+          <div class="tool-use" data-lang="hi">Code-based बग रिपोर्ट</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Windsurf</div>
+          <div class="tool-use" data-lang="en">Agentic test plan generation</div>
+          <div class="tool-use" data-lang="hi">Agentic टेस्ट प्लान</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">GitHub Copilot</div>
+          <div class="tool-use" data-lang="en">Auto-fix and pull requests</div>
+          <div class="tool-use" data-lang="hi">Auto-fix और pull requests</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Antigravity</div>
+          <div class="tool-use" data-lang="en">Autonomous exploratory testing</div>
+          <div class="tool-use" data-lang="hi">स्वचालित exploratory testing</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Jira</div>
+          <div class="tool-use" data-lang="en">Professional test management</div>
+          <div class="tool-use" data-lang="hi">Professional टेस्ट मैनेजमेंट</div>
+          <div class="free-badge">Free</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">MCP</div>
+          <div class="tool-use" data-lang="en">Claude ↔ Jira direct connection</div>
+          <div class="tool-use" data-lang="hi">Claude ↔ Jira direct connection</div>
+          <div class="free-badge">Free</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOR WHO ── -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-lang="en">Who This Is For</div>
+      <div class="section-label" data-lang="hi">यह किसके लिए है</div>
+
+      <h2 class="section-title" data-lang="en">Built for testers at every stage.</h2>
+      <h2 class="section-title" data-lang="hi">हर स्तर के testers के लिए।</h2>
+
+      <div class="for-who-grid">
+        <div class="for-card">
+          <div class="icon">🧪</div>
+          <h3 data-lang="en">Manual Testers</h3>
+          <h3 data-lang="hi">Manual Testers</h3>
+          <p data-lang="en">Stay ahead as AI changes the industry. Add tools that make you faster without changing what you're good at.</p>
+          <p data-lang="hi">AI के बदलाव के साथ आगे रहें। ऐसे टूल्स जोड़ें जो आपको तेज़ बनाएं।</p>
+        </div>
+        <div class="for-card">
+          <div class="icon">🎓</div>
+          <h3 data-lang="en">Career Changers</h3>
+          <h3 data-lang="hi">Career Changers</h3>
+          <p data-lang="en">Enter QA with a modern workflow and a portfolio that shows you know the tools hiring managers look for.</p>
+          <p data-lang="hi">एक modern workflow और portfolio के साथ QA में प्रवेश करें।</p>
+        </div>
+        <div class="for-card">
+          <div class="icon">💻</div>
+          <h3 data-lang="en">Developers</h3>
+          <h3 data-lang="hi">Developers</h3>
+          <p data-lang="en">Understand structured testing and write better code knowing what QA will check and how.</p>
+          <p data-lang="hi">Structured testing को समझें और बेहतर code लिखें।</p>
+        </div>
+        <div class="for-card">
+          <div class="icon">📈</div>
+          <h3 data-lang="en">IT Professionals</h3>
+          <h3 data-lang="hi">IT Professionals</h3>
+          <p data-lang="en">Add AI-assisted testing to your skill set and open roles in QA, product, or technical project management.</p>
+          <p data-lang="hi">अपने skill set में AI-assisted testing जोड़ें।</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ── -->
+  <section class="final-cta">
+    <div class="container">
+      <h2 data-lang="en">Start testing smarter today.</h2>
+      <h2 data-lang="hi">आज से smarter testing शुरू करें।</h2>
+
+      <p data-lang="en">9 tools. A complete workflow. A portfolio you can show. Free preview available on Udemy.</p>
+      <p data-lang="hi">9 टूल्स। एक पूरा workflow। एक portfolio जो आप दिखा सकते हैं। Udemy पर फ्री प्रीव्यू उपलब्ध।</p>
+
+      <a href="PASTE_YOUR_UDEMY_REFERRAL_LINK_HERE" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
+        <span data-lang="en">Enrol on Udemy Now</span>
+        <span data-lang="hi" style="display:none">अभी Udemy पर एनरोल करें</span>
+      </a>
+      <p class="cta-note" data-lang="en">30-day money-back guarantee · Lifetime access · Certificate of completion</p>
+      <p class="cta-note" data-lang="hi">30 दिन की मनी-बैक गारंटी · Lifetime access · Completion certificate</p>
+    </div>
+  </section>
+
+  <footer>
+    <p data-lang="en">© 2026 Vibetesting · <a href="https://www.facebook.com/vibetesting" style="color:var(--muted)">Facebook</a></p>
+    <p data-lang="hi">© 2026 Vibetesting · <a href="https://www.facebook.com/vibetesting" style="color:var(--muted)">Facebook</a></p>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.body.classList.toggle('lang-hi', lang === 'hi');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+
+      // Handle inline spans inside buttons
+      document.querySelectorAll('.cta-btn span[data-lang]').forEach(el => {
+        el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
