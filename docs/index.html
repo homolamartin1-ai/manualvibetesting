@@ -101,19 +101,17 @@
       position: relative;
       z-index: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 48px;
+      gap: 40px;
       padding-top: 60px;
       padding-bottom: 60px;
+      text-align: center;
     }
-    .hero-text {
-      flex: 1;
-      min-width: 0;
-      text-align: left;
-    }
+    .hero-text { width: 100%; }
     .hero-video {
-      flex-shrink: 0;
-      width: 480px;
+      width: 100%;
+      max-width: 760px;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.15);
@@ -123,11 +121,6 @@
       width: 100%;
       aspect-ratio: 16/9;
       display: block;
-    }
-    @media (max-width: 900px) {
-      .hero .container { flex-direction: column; }
-      .hero-text { text-align: center; }
-      .hero-video { width: 100%; }
     }
     .hero .badge {
       display: inline-block;
