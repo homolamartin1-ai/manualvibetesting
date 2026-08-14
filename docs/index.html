@@ -408,19 +408,22 @@
     }
   </style>
 </head>
-<body>
+<body class="lang-pl">
 
   <!-- Language bar -->
   <div class="lang-bar">
-    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">English</button>
-    <button class="lang-btn" onclick="setLang('pl')" id="btn-pl">Polski</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
+    <button class="lang-btn active" onclick="setLang('pl')" id="btn-pl">Polski</button>
   </div>
 
   <!-- ── HERO ── -->
   <section class="hero">
     <div class="container">
       <div class="hero-text">
-        <div class="badge">New Course on Udemy</div>
+        <div class="badge">
+          <span data-lang="en">🎓 Special instructor discount — limited time</span>
+          <span data-lang="pl">🎓 Specjalna zniżka od prowadzącego — ograniczony czas</span>
+        </div>
 
         <h1 data-lang="en">The AI-powered testing workflow<br><span>that turns a full sprint cycle<br>into a single morning.</span></h1>
         <h1 data-lang="pl">Testowy workflow napędzany AI,<br><span>który zamienia cały cykl sprintu<br>w jeden poranek.</span></h1>
@@ -429,8 +432,8 @@
         <p class="subtitle" data-lang="pl">Naucz się łączyć swoją wiedzę testera z 9 narzędziami AI — i twórz efekty pracy starszego inżyniera QA dwa razy szybciej. Każde narzędzie ma darmowy plan.</p>
 
         <a href="https://www.udemy.com/course/vibetesting-in-2026/?couponCode=40F3C1D1B196C6DA8101" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
-          <span data-lang="en">Enrol on Udemy — Free Preview Available</span>
-          <span data-lang="pl" style="display:none">Zapisz się na Udemy — dostępny darmowy podgląd</span>
+          <span data-lang="en">Claim your discount on Udemy →</span>
+          <span data-lang="pl">Odbierz zniżkę na Udemy →</span>
         </a>
         <p class="cta-note" data-lang="en">30-day money-back guarantee · All levels · 9 tools · All free tiers</p>
         <p class="cta-note" data-lang="pl">30-dniowa gwarancja zwrotu pieniędzy · Wszystkie poziomy · 9 narzędzi · Wszystkie darmowe</p>
@@ -453,7 +456,7 @@
     <div class="container">
       <div class="offer-badge">
         <span data-lang="en">Special Discount</span>
-        <span data-lang="pl" style="display:none">Specjalna zniżka</span>
+        <span data-lang="pl">Specjalna zniżka</span>
       </div>
 
       <h2 class="section-title" data-lang="en">A special discount code from your instructor.</h2>
@@ -466,29 +469,29 @@
         <!-- MAIN COURSE — Manual Testing -->
         <a href="https://www.udemy.com/course/vibetesting-in-2026/?couponCode=40F3C1D1B196C6DA8101" class="cta-btn primary-offer" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
           <span data-lang="en">Manual Testing with AI Tools — Claim Discount</span>
-          <span data-lang="pl" style="display:none">Manual Testing z narzędziami AI — Odbierz zniżkę</span>
+          <span data-lang="pl">Manual Testing z narzędziami AI — Odbierz zniżkę</span>
           <span class="offer-tag">
             <span data-lang="en">Main course</span>
-            <span data-lang="pl" style="display:none">Kurs główny</span>
+            <span data-lang="pl">Kurs główny</span>
           </span>
         </a>
 
         <div class="offer-courses-label">
           <span data-lang="en">Or grab the discount on the other courses</span>
-          <span data-lang="pl" style="display:none">Albo odbierz zniżkę na pozostałe kursy</span>
+          <span data-lang="pl">Albo odbierz zniżkę na pozostałe kursy</span>
         </div>
 
         <div class="secondary-row">
           <!-- API Testing -->
           <a href="https://www.udemy.com/course/vibe-testing-in-2026-api-testing-with-ai-tools/?couponCode=5EF4C17036D14B857814" class="cta-btn secondary" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
             <span data-lang="en">API Testing with AI Tools</span>
-            <span data-lang="pl" style="display:none">API Testing z narzędziami AI</span>
+            <span data-lang="pl">API Testing z narzędziami AI</span>
           </a>
 
           <!-- Playwright -->
           <a href="https://www.udemy.com/course/vibetesting-in-2026-automated-testing-with-playwright-ai/?couponCode=2F4F4B8A409FAF528E2B" class="cta-btn secondary" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
             <span data-lang="en">Automated Testing with Playwright &amp; AI</span>
-            <span data-lang="pl" style="display:none">Automatyzacja testów z Playwright i AI</span>
+            <span data-lang="pl">Automatyzacja testów z Playwright i AI</span>
           </a>
         </div>
       </div>
@@ -719,7 +722,7 @@
 
       <a href="https://www.udemy.com/course/vibetesting-in-2026/?couponCode=40F3C1D1B196C6DA8101" class="cta-btn" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener">
         <span data-lang="en">Enrol on Udemy Now</span>
-        <span data-lang="pl" style="display:none">Zapisz się teraz na Udemy</span>
+        <span data-lang="pl">Zapisz się teraz na Udemy</span>
       </a>
       <p class="cta-note" data-lang="en">30-day money-back guarantee · Lifetime access · Certificate of completion</p>
       <p class="cta-note" data-lang="pl">30-dniowa gwarancja zwrotu · Dostęp na zawsze · Certyfikat ukończenia</p>
@@ -742,6 +745,11 @@
         el.style.display = el.dataset.lang === lang ? 'inline' : 'none';
       });
     }
+
+    // This page's traffic is the Warsaw campaign, and many Polish users have
+    // English-set devices (so browser-language detection would miss them). So we
+    // default EVERYONE to Polish; English stays one click away via the toggle.
+    setLang('pl');
   </script>
 
 </body>
