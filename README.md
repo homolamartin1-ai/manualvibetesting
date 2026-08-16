@@ -5,6 +5,26 @@ Download or fork it once and everything is in place for every section.
 
 ---
 
+## 📘 Not sure what to do in a section? Start here → [Step-by-Step Guides](docs/guides/README.md)
+
+Each hands-on section (3–11) has a written walkthrough — **exactly what to do, in order,
+with the prompt to paste and where to click**. Watch the lecture, then follow the guide to
+do it yourself:
+
+| Section | Guide |
+|---|---|
+| 3 · Setup | [Setup](docs/guides/section-03-setup.md) |
+| 4 · Understand the app | [Understand the App](docs/guides/section-04-understand-app.md) |
+| 5 · Test plan | [Test Plan](docs/guides/section-05-test-plan.md) |
+| 6 · Test cases | [Test Cases](docs/guides/section-06-test-cases.md) |
+| 7 · Exploratory | [Exploratory Testing](docs/guides/section-07-exploratory.md) |
+| 8 · Bug reports | [Bug Reports](docs/guides/section-08-bug-reports.md) |
+| 9 · Verification | [Verification & Regression](docs/guides/section-09-verification.md) |
+| 10 · Test reports | [Test Reports](docs/guides/section-10-test-reports.md) |
+| 11 · Capstone | [Capstone — BookNow](docs/guides/section-11-capstone.md) |
+
+---
+
 ## What is in this repo
 
 ```
