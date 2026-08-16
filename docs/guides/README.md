@@ -19,7 +19,7 @@ Each guide follows the same shape:
 | 4 | [Understand the App](section-04-understand-app.md) | A feature inventory of TechShop |
 | 5 | [Test Plan](section-05-test-plan.md) | A sprint test plan (2 ways) |
 | 6 | [Test Cases](section-06-test-cases.md) | Test cases in a doc and in Jira |
-| 7 | [Exploratory Testing](section-07-exploratory.md) | Session findings from Antigravity |
+| 7 | [Exploratory Testing](section-07-exploratory.md) | Session findings from Antigravity IDE |
 | 8 | [Bug Reports](section-08-bug-reports.md) | Professional bug reports + Jira bugs |
 | 9 | [Verification & Regression](section-09-verification.md) | A verification checklist, bugs re-tested |
 | 10 | [Test Reports](section-10-test-reports.md) | A test summary report with go/no-go |

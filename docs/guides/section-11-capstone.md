@@ -33,7 +33,7 @@ Do the same cycle you learned, now start to finish, on BookNow:
 - File them in Jira (**Prompt 38**) if you want the full workflow.
 
 ### 4. Explore (like Section 7)
-- Run Antigravity on `capstone/booknow-broken` (**Prompt 40**).
+- Run Antigravity IDE on `capstone/booknow-broken` (**Prompt 40**).
 - Review the findings — keep the real bugs, discard misreads.
 
 ### 5. Report bugs (like Section 8)
@@ -53,7 +53,7 @@ Do the same cycle you learned, now start to finish, on BookNow:
 Judge your **process**, not a bug count:
 - [ ] You built a feature inventory and a test plan with grounded risks
 - [ ] Your test cases cover positive, negative, and edge — not just happy paths
-- [ ] You explored with Antigravity and confirmed each finding yourself
+- [ ] You explored with Antigravity IDE and confirmed each finding yourself
 - [ ] Your bug reports are reproducible from the steps alone
 - [ ] You verified fixes against `booknow-fixed` and checked regression
 - [ ] You wrote a test summary report with a clear, conditional go/no-go

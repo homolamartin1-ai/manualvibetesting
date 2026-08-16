@@ -45,7 +45,7 @@ Full walkthrough: [`resources/github-setup-guide.md`](../../resources/github-set
 ## Step 4 — Install the agentic editors (Clips 4–5)
 1. **Cursor** — cursor.com → download → install → sign in.
 2. **Windsurf** — windsurf.com → download → install → sign in.
-3. **Antigravity** — install from its site → sign in.
+3. **Antigravity IDE** — install from its site → sign in.
 
 These are code editors with an AI agent built in. You won't write code — the agent does;
 you direct and review.
@@ -83,5 +83,5 @@ Keep your answer to the five most important findings.
 - [ ] The repo folder is on your Desktop and you can open `techshop/broken-app/index.html`
 - [ ] You can log into Claude, ChatGPT, and Gemini
 - [ ] Claude **Desktop app** is installed
-- [ ] Cursor, Windsurf, and Antigravity are installed and signed in
+- [ ] Cursor, Windsurf, and Antigravity IDE are installed and signed in
 - [ ] You ran Prompt 31 and got five findings back
