@@ -1,15 +1,20 @@
 # Step-by-Step Guides
 
 Written walkthroughs for every hands-on section — exactly what to do, in order, with the
-prompts to paste and where to click. Use these alongside the videos: **watch the lecture,
-then follow the guide to do it yourself.**
+**full prompts written out for you** and where to click. Use these alongside the videos:
+**watch the lecture, then follow the guide to do it yourself.**
 
-Each guide follows the same shape:
-- **What you'll produce** — the deliverable for the section
-- **Before you start** — tools and files you need open
-- **Steps** — numbered, matched to the video clips, with the exact prompt to use
-- **Common mistakes** — the things students get stuck on
-- **Done when** — a checklist to know you finished
+### How to follow a guide
+- Do **one numbered step at a time**, top to bottom.
+- Every prompt is **written out in full and ready to paste** — just copy the grey box,
+  paste it into the tool named in the step, and press Enter. Where a prompt says
+  `[Paste ...]`, paste the thing it asks for.
+- After important steps there's a **✅ Check** — a quick "you should now see X." **Don't move
+  on until it's true.** If it isn't, look at **Common mistakes** at the bottom of the guide.
+- If you're still stuck, ask in the community: https://discord.gg/txCPTbdzJs
+
+Each guide has: **What you'll produce → Before you start → numbered Steps (with ✅ Checks)
+→ Common mistakes → Done when.**
 
 ## The guides
 

@@ -1,75 +1,82 @@
 # Section 9 — Verification & Regression (Step-by-Step)
 
-**What you'll produce:** a verification checklist for your bugs, re-tested against the
-**fixed** app, plus a regression scope — what else might have broken.
+**What you'll produce:** proof that the reported bugs are actually fixed (re-tested against
+the **fixed** app), plus a check that the fixes didn't break anything else.
 
 **Process step:** Verification and regression · **Tool:** Claude
 
----
-
-## Before you start
-- Your list of reported bugs (from Sections 7–8, or [`resources/known-bugs.md`](../../resources/known-bugs.md))
-- The **fixed** app: `techshop/fixed-app`
-- Claude open
-
-> Note the switch: up to now you tested `broken-app`. Verification runs against
-> `fixed-app` — the version where the bugs are supposedly resolved.
+> **Big change this section:** until now you tested `techshop/broken-app`. Now you test
+> `techshop/fixed-app` — the version where the bugs are supposedly resolved. Your job is to
+> confirm that.
 
 ---
 
-## Step 1 — Open the fixed app (Clip 1)
-Open `techshop/fixed-app/index.html` in your browser. It looks the same as the broken app —
-your job is to confirm each reported bug is actually gone.
+## Step 1 — Open the FIXED app (video Clip 1)
+1. Open your course folder → `techshop` → **`fixed-app`**.
+2. **Double-click `index.html`.** It opens in the browser. It looks identical to the broken
+   app — the difference is that the bugs should be gone.
 
-## Step 2 — Generate a verification checklist (Clip 2)
-Hand Claude your bug list with **Prompt 46**:
+**✅ Check:** the app opens and you know you're in **fixed-app**, not broken-app.
+
+## Step 2 — Get a verification checklist from Claude (video Clip 2)
+1. Get your list of reported bugs (from Sections 7–8, or open
+   [`resources/known-bugs.md`](../../resources/known-bugs.md)).
+2. Open **Claude** and paste this, with your bug list:
 
 ```
-Here is a list of bugs that were fixed in a web app.
-For each bug, write a three-step verification procedure.
-[Paste bug titles or IDs with brief descriptions]
+Here is a list of bugs that were fixed in a web app. For each bug, write a short 3-step
+procedure I can follow to verify it is actually fixed.
+[Paste your bug titles / IDs with a one-line description each]
 ```
 
-You get a short, repeatable check per bug — the exact steps to prove it's fixed.
+**✅ Check:** you get a tiny 3-step check for each bug — the exact clicks to confirm it's
+gone.
 
 ## Step 3 — Run the checklist against the fixed app
-Go bug by bug. For each:
-- Follow the three verification steps in `techshop/fixed-app`.
-- **Pass** = the bug is gone. **Fail** = it's still there (re-open the ticket).
-- Record the result next to each bug (in Jira, mark the ticket verified/resolved).
+Go bug by bug. For each one:
+1. Do the 3 steps in `techshop/fixed-app`.
+2. Mark **Pass** (the bug is gone) or **Fail** (still there).
+3. In Jira, mark the ticket **verified/closed** if it passed, or **re-open** it if it failed.
 
-## Step 4 — Work out the regression scope (Clip 3)
-A fix can break something else. For each significant fix, use **Prompt 47**:
+**✅ Check:** every reported bug has a Pass or Fail recorded.
 
-```
-A developer fixed a discount calculation bug in the shopping cart of an e-commerce app.
-What other areas of the app should I regression test to make sure the fix
-did not introduce new problems?
-```
-
-Then prioritise what to actually re-test with **Prompt 48**:
+## Step 4 — Work out what else might have broken (video Clip 3)
+Fixing one thing can break another. For a significant fix, paste this into Claude:
 
 ```
-From this regression list, which 3 areas are highest risk given that only
-the cart discount calculation was changed?
-Explain your reasoning.
-[Paste regression list from the previous prompt]
+A developer fixed the cart discount calculation in an e-commerce web app.
+What other areas of the app should I regression test to make sure that fix did not
+introduce new problems? List specific features and user flows.
 ```
 
-## Step 5 — Re-test the high-risk areas
-Test the top regression areas in the fixed app. Confirm the fix didn't break the cart
-total, the checkout flow, or anything connected.
+Then narrow it down:
+
+```
+From that list, which 3 areas are the highest risk, given that ONLY the cart discount
+calculation was changed? Explain your reasoning briefly.
+[Paste the list from the previous answer]
+```
+
+**✅ Check:** you have a short, prioritised list of things to re-test.
+
+## Step 5 — Re-test the top regression areas
+Test those top 3 areas in the fixed app. Confirm the fix didn't break the cart total, the
+checkout flow, or anything connected to it.
+
+**✅ Check:** the high-risk areas still work correctly after the fix.
 
 ---
 
-## Common mistakes
-- **Verifying against the broken app by accident** → nothing will pass. Use `fixed-app`.
-- **Only checking the bug itself, never the regression scope** → the classic way a fix
-  ships one bug and creates another. Do Steps 4–5.
-- **Marking a bug "verified" without actually re-running the steps** → verify for real.
+## Common mistakes (read if you're stuck)
+- **You're testing the broken app by mistake.** Nothing will pass. Make sure you opened
+  `techshop/fixed-app`.
+- **You verified the bug but skipped regression.** That's how a fix quietly breaks something
+  else. Do Steps 4–5.
+- **You marked a bug "verified" without actually re-doing the steps.** Verify for real,
+  every time.
 
 ## Done when
 - [ ] You generated a verification checklist for every reported bug
-- [ ] You re-tested each in `techshop/fixed-app` and recorded pass/fail
-- [ ] You produced a regression scope and re-tested the highest-risk areas
-- [ ] Tickets are updated (verified / re-opened) in Jira
+- [ ] You re-tested each bug in `techshop/fixed-app` and recorded Pass/Fail
+- [ ] You produced a regression list and re-tested the top-risk areas
+- [ ] Jira tickets are updated (verified or re-opened)

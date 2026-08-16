@@ -1,85 +1,91 @@
 # Section 10 — Test Reports (Step-by-Step)
 
-**What you'll produce:** a **test summary report** — execution stats, defect summary,
-outstanding risks, and a go/no-go recommendation — built two ways: from data you supply
-(Claude), and pulled live from **Jira** (Claude Desktop / GitHub Copilot via MCP).
+**What you'll produce:** a **test summary report** — the document a manager reads to decide
+"ship or don't ship." You'll build it two ways: from numbers you supply (Claude), and pulled
+automatically from **Jira** (Claude Desktop).
 
-**Process step:** Test closure and reporting · **Tools:** Claude (chatbot) · Claude Desktop / Copilot (agentic — reads Jira)
+**Process step:** Test closure and reporting · **Tools:** Claude · Claude Desktop + Jira (MCP)
 
----
-
-## Before you start
-- Your testing results (how many cases passed/failed, bugs by severity) — or your Jira project
-- Claude open; Claude **Desktop** connected to Jira for the agentic way
-- Your Jira **project key** and sprint name
+> A test report answers: what did we test, what passed, what's still broken, and should we
+> release? It must be readable by a non-technical person.
 
 ---
 
-## What a test report is for (Clip 1)
-It's the document a manager or stakeholder reads to decide **ship or don't ship**. It
-summarises what was tested, what passed, what's still broken, and your recommendation. It
-must be readable by a non-technical person.
+# PART A — The manual way: Claude with your numbers (video Clip 2)
 
-## Part A — The chatbot way (Claude, you supply the data) — Clip 2
+## Step 1 — Gather your numbers
+Write down:
+- Test cases: total, how many executed, passed, failed, blocked, not executed.
+- Bugs: total, how many Critical / High / Medium / Low, how many fixed vs still open (with
+  ticket IDs).
 
-### Step 1 — Gather your numbers
-Count: total test cases, executed, passed, failed, blocked, not executed; and bugs by
-severity (Critical/High/Medium/Low), how many resolved vs still open.
+(If you don't have exact numbers, estimate from your Jira project — the point is to practise
+the report.)
 
-### Step 2 — Generate the report
-Use **Prompt 49**, filling in your numbers:
+## Step 2 — Generate the report — paste this (fill in your numbers)
 
 ```
-Write a professional test summary report based on the following testing data.
-Application: TechShop.
-Testing period: 3 days.
-Test environment: Chrome on desktop, local HTML file.
-Test execution: total [N], executed [N], passed [N], failed [N],
-blocked [N] (BUG-011 blocked checkout), not executed [N] (reason).
-Defect summary: total [N], Critical [N], High [N], Medium [N], Low [N],
-resolved [N], still open [N] (ticket IDs).
-Write: executive summary, scope, execution summary, defect summary,
+Write a professional test summary report from this data.
+Application: TechShop. Testing period: 3 days. Environment: Chrome on desktop, local file.
+Test execution: total 40, executed 36, passed 30, failed 6, blocked 2 (BUG-011 blocked
+checkout), not executed 2 (ran out of time).
+Defects: total 8 — Critical 1, High 3, Medium 3, Low 1. Resolved 5, still open 3
+(BUG-004, BUG-008, BUG-011).
+Write these sections: executive summary, scope, execution summary, defect summary,
 outstanding risks, and a go/no-go recommendation.
 Keep it professional but readable for a non-technical stakeholder.
 ```
 
-### Step 3 — Make the recommendation conditional (Clip 2 follow-up)
-A blunt "no-go" is rarely useful. Use **Prompt 50** to make it actionable:
+**✅ Check:** you get a full report with all the sections and a clear recommendation.
+
+## Step 3 — Make the recommendation useful (paste in the SAME chat)
+A flat "no-go" isn't helpful. Make it conditional:
 
 ```
-Update the conclusion to make it conditional.
-Recommend go-ahead for release if BUG-011 and BUG-004 are resolved before deployment,
-with BUG-008 tracked as a known issue for the next sprint.
+Rewrite the conclusion as a conditional recommendation: recommend release IF BUG-011 and
+BUG-004 are fixed before deployment, with BUG-008 tracked as a known issue for next sprint.
 ```
 
-## Part B — The agentic way (reads Jira live) — Clip 3
-
-No manual counting — the AI reads your Jira project and builds the report itself. In
-**Claude Desktop** (or GitHub Copilot) connected to Jira, use **Prompt 51**:
-
-```
-Read all issues in Jira project [PROJECT KEY] for [sprint name].
-Count test case Tasks by label status — how many passed, failed, blocked, not executed.
-Count Bug issues by priority — Critical, High, Medium, Low.
-List which bugs are resolved and which are still open with their ticket numbers.
-Then generate a professional test summary report including: executive summary,
-execution summary with pass rate, defect summary by severity, outstanding risks
-from open bugs, and a go/no-go recommendation with rationale.
-Save the report as test-summary-sprint-1.md in my project folder.
-```
-
-The AI pulls the real numbers from Jira, writes the report, and saves it to your repo.
-Compare it to your Part A version — the agentic one is grounded in live data.
+**✅ Check:** the recommendation now says exactly what must happen before release.
 
 ---
 
-## Common mistakes
-- **A vague go/no-go** ("looks mostly fine"). Make it conditional and specific — which bugs
-  block release, which are acceptable known issues (Step 3).
-- **Writing for engineers, not stakeholders** → the report is for a decision-maker. Plain language.
-- **Part B without Jira connected** → nothing to read. Confirm MCP is set up.
+# PART B — The automatic way: read straight from Jira (video Clip 3)
+
+No manual counting — the AI reads your Jira project and writes the report.
+
+## Step 1 — Use the Claude Desktop app (connected to Jira)
+Make sure Claude **Desktop** is connected to Jira (see
+[`resources/mcp-setup-guide.md`](../../resources/mcp-setup-guide.md)).
+
+## Step 2 — Ask it to build the report from Jira — paste this
+Replace `TS` with your project key and the sprint name with yours:
+
+```
+Read all the issues in Jira project TS for Sprint 1.
+Count the test-case Tasks by status — passed, failed, blocked, not executed.
+Count the Bug issues by priority — Critical, High, Medium, Low.
+List which bugs are resolved and which are still open, with their ticket numbers.
+Then write a professional test summary report with: executive summary, execution summary
+with pass rate, defect summary by severity, outstanding risks from the open bugs, and a
+go/no-go recommendation with reasoning.
+Save it as test-summary-sprint-1.md in my project folder.
+```
+
+**✅ Check:** the AI reports real counts from your Jira project and saves a
+`test-summary-sprint-1.md` file. Compare it to your Part A version — this one is grounded in
+live data.
+
+---
+
+## Common mistakes (read if you're stuck)
+- **A vague recommendation** ("seems mostly fine"). Make it conditional and specific — which
+  bugs block release, which are acceptable known issues (Part A, Step 3).
+- **Written for engineers.** The reader is a decision-maker — keep it plain and readable.
+- **Part B does nothing.** Claude Desktop isn't connected to Jira, or the project key/sprint
+  name is wrong. Fix the MCP connection and the names.
 
 ## Done when
 - [ ] You produced a report from your own data with a conditional go/no-go
-- [ ] (Agentic) Claude/Copilot pulled the numbers from Jira and saved a report to the repo
-- [ ] The report has: exec summary, execution summary, defect summary, risks, recommendation
+- [ ] (Automatic) Claude Desktop pulled the numbers from Jira and saved a report file
+- [ ] The report has: executive summary, execution summary, defect summary, risks, recommendation

@@ -1,84 +1,98 @@
 # Section 7 — Exploratory Testing with Antigravity IDE (Step-by-Step)
 
-**What you'll produce:** findings from an AI-assisted exploratory testing session — a list
-of bugs and oddities Antigravity IDE surfaces by driving the app, which you'll turn into bug
-reports in Section 8.
+**What you'll produce:** a list of bugs and oddities that Antigravity IDE finds by driving
+the app for you — which you'll then turn into draft bug reports for Section 8.
 
-**Process step:** Test execution · **Tools:** Antigravity IDE (session co-pilot) · Claude (documentation)
+**Process step:** Test execution · **Tools:** Antigravity IDE · Claude
+
+> Exploratory testing = structured investigation, not scripted steps. You (and the AI) poke
+> at the app looking for problems. Antigravity IDE can run the whole session itself and
+> report what it finds.
 
 ---
 
 ## Before you start
-- Antigravity IDE installed and signed in, with the repo folder open
-- The path to the app: `techshop/broken-app`
+- **Antigravity IDE** open, with your course folder opened in it
+  (**File → Open Folder** → your course folder)
+- You'll point it at `techshop/broken-app`
 
 ---
 
-## What exploratory testing is (Clip 1)
-Not scripted test cases — this is structured investigation. You (and the AI) explore the
-app looking for problems, guided by a **charter** (a mission: what to explore and what
-could go wrong). Antigravity IDE can both suggest charters and run the session itself.
+## Step 1 — Open the chat/agent panel in Antigravity IDE
+Find the **Agent / Chat** panel (a sidebar, or a shortcut shown on the welcome screen).
+That's where you'll type the instruction below.
 
-## Step 1 — Run an autonomous exploratory session (Clip 1/3)
-In Antigravity IDE, use **Prompt 40** (point it at the app folder):
+**✅ Check:** you can see a text box where you can type an instruction to the AI agent.
+
+## Step 2 — Tell it to run an exploratory session (video Clip 1) — paste this
 
 ```
-Run an exploratory testing session on the TechShop application in techshop/broken-app.
-Open app in the browser. Explore all user-facing features — login, product catalog,
-shopping cart, checkout.
-Test interactions, check validations, probe edge cases, and surface any bugs,
-missing functionality, or unexpected behaviour you find.
-Report each finding as a short title and one-sentence description.
+Run an exploratory testing session on the TechShop app in the folder techshop/broken-app.
+Open the app in the browser and explore every user-facing feature: login, product catalog,
+shopping cart, and checkout.
+Try normal actions, invalid input, empty fields, and edge cases. Look for bugs, missing
+validation, wrong calculations, and anything that behaves unexpectedly.
+Report each finding as a short title plus a one-sentence description.
 ```
 
-Antigravity IDE opens the app, clicks through it, and reports findings — each as a title + one
-line. Watch what it does; it's testing the app live.
+Press **Enter**. Antigravity IDE will open the app and click through it on its own. Watch —
+it's testing the app live.
 
-## Step 2 — Review the findings (your judgment)
-Read every finding. For each, decide:
-- **Real bug?** Keep it.
-- **Expected behaviour the AI misread?** Discard it.
-- **Needs a closer look?** Note it for follow-up.
+**✅ Check:** it produces a list of findings, each a short title + one sentence (e.g.
+"Password shown in plain text — the login field does not mask characters").
 
-The AI surfaces; **you confirm**. This is the core skill — the machine can't tell a bug
-from intended behaviour without you.
+## Step 3 — Review the findings yourself (this is the real skill)
+Go through the list. For **each** finding, decide:
+- ✅ **Real bug** → keep it.
+- ❌ **Actually intended behaviour the AI misread** → cross it out.
+- ❓ **Not sure** → note it and check it yourself in the browser.
 
-## Step 3 — Export the session notes
-Have Antigravity IDE export or copy out its session findings. Save them (e.g.
-`exploratory-findings.md`). These are the raw material for Section 8's bug reports.
+The AI *surfaces* things; **you decide** what's a real bug. A machine can't tell a bug from
+a feature without you.
 
-## Step 4 — Turn findings into draft bug reports (Clip 3/4)
-Hand the exported notes to Claude with **Prompt 41**:
+**✅ Check:** you have a shortlist of confirmed real findings.
+
+## Step 4 — Save the session findings
+Copy the confirmed findings into a file called **`exploratory-findings.md`** in your course
+folder. (If Antigravity IDE has an export button, use it.) These are the raw material for
+Section 8.
+
+## Step 5 — Turn the findings into draft bug reports (video Clip 3/4)
+1. Open **Claude**.
+2. Paste this, then paste your findings where shown:
 
 ```
 I just finished an exploratory testing session on TechShop.
-Here are the session findings from Antigravity IDE:
-[Paste exported session notes]
-Convert each confirmed finding into a professional bug report with:
-Title, Environment, Steps to Reproduce starting from a logged-in state,
-Expected Result, Actual Result, Severity.
-Keep each report concise and precise.
+Here are my confirmed findings:
+[Paste your findings from exploratory-findings.md]
+
+Turn each finding into a professional bug report with: Title, Environment, Steps to
+Reproduce (starting from a logged-in state), Expected Result, Actual Result, and Severity.
+Keep each report short and precise.
 ```
 
-You now have draft bug reports. Section 8 polishes them and files them in Jira.
+**✅ Check:** you now have a draft bug report for each finding. Section 8 will polish these
+and file them in Jira.
 
 ---
 
-## Optional: guide your own exploration
-If you want to explore manually with AI as co-pilot, these help:
-- **Prompt 6** — generate test charters
-- **Prompt 7** — what to explore next after finding a bug
-- **Prompt 8** — heuristics-based checklist (SFDIPOT, FEW HICCUPPS)
+## Optional — if you'd rather explore manually with the AI helping
+Ask Claude for **test charters** ("Write 3 exploratory test charters for the TechShop
+checkout — each with a mission, risk areas, and key questions"), or ask "I found bug X —
+what related areas should I explore next?"
 
 ---
 
-## Common mistakes
-- **Accepting every Antigravity IDE finding as a bug** → some are intended behaviour. Confirm each yourself (Step 2).
-- **Not saving the session notes** → you'll have nothing to feed Section 8. Export them.
-- **Pointing Antigravity IDE at the wrong folder** → it explores the wrong app. Use `techshop/broken-app`.
+## Common mistakes (read if you're stuck)
+- **You kept every finding as a bug.** Some are intended behaviour — confirm each one
+  yourself (Step 3).
+- **You didn't save the findings.** Then Section 8 has nothing to work from. Save
+  `exploratory-findings.md`.
+- **You pointed it at the wrong folder.** It must be `techshop/broken-app` (not `fixed-app`,
+  not `capstone`).
 
 ## Done when
 - [ ] Antigravity IDE ran a session on `techshop/broken-app` and reported findings
 - [ ] You reviewed each finding and kept only the real ones
 - [ ] You saved `exploratory-findings.md`
-- [ ] You converted them to draft bug reports with Prompt 41
+- [ ] You turned the findings into draft bug reports with Claude
