@@ -242,6 +242,26 @@ function renderCheckoutSummary() {
 }
 
 function buggyPlaceOrder() {
+  const requiredFields = [
+    'co-firstname',
+    'co-lastname',
+    'co-address',
+    'co-city',
+    'co-zip',
+    'co-email',
+    'co-phone',
+    'co-card',
+    'co-expiry',
+    'co-cvv'
+  ];
+  const missingField = requiredFields.find(id => !document.getElementById(id).value.trim());
+
+  if (missingField) {
+    document.getElementById(missingField).focus();
+    showToast('Please complete all required checkout fields.', 'error');
+    return;
+  }
+
   showPage('confirm');
 }
 
